@@ -5,427 +5,353 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Finelines — Premium African fashion, made for everyday.</title>
   <meta name="description" content="Finelines is a curated platform for premium African fashion brands, built for the diaspora professional.">
-
   <link rel="icon" type="image/svg+xml" href="assets/logo-monogram-finelines.svg">
   <link rel="stylesheet" href="colors_and_type.css">
   <link rel="stylesheet" href="homepage.css">
-
-  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 </head>
 <body>
-  <div id="app"></div>
 
-  <script type="text/babel">
-    const { useState, useEffect } = React;
+<!-- HEADER -->
+<header class="fl-header" id="site-header">
+  <div class="fl-announcement">Free UK delivery on orders over £200 · We ship worldwide</div>
+  <div class="fl-nav">
+    <div class="fl-nav-left">
+      <button class="fl-icon-btn fl-nav-burger" aria-label="Menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <a class="fl-nav-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+        <span>EN · GBP</span>
+      </a>
+    </div>
+    <a class="fl-wordmark" href="#" aria-label="Finelines home">Finel<em>i</em>nes</a>
+    <div class="fl-nav-right">
+      <button class="fl-icon-btn" aria-label="Search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </button>
+      <button class="fl-icon-btn" aria-label="Account">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
+      </button>
+      <button class="fl-icon-btn fl-cart-btn" aria-label="Bag">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7Z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg>
+        <span class="fl-cart-badge">2</span>
+      </button>
+    </div>
+  </div>
+  <nav class="fl-subnav">
+    <a href="#" class="fl-subnav-link">Shop</a>
+    <a href="#" class="fl-subnav-link">Brands</a>
+    <a href="#" class="fl-subnav-link is-active">The edit</a>
+    <a href="#" class="fl-subnav-link">Adorned</a>
+    <a href="#" class="fl-subnav-link">Journal</a>
+    <a href="#" class="fl-subnav-link">About</a>
+    <a href="#" class="fl-subnav-link">Become a vendor</a>
+  </nav>
+</header>
 
-    // ─── Image map (swap Unsplash placeholders for real photography at launch) ───
-    const IMG = {
-      hero:  "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=1600&q=80",
-      img1:  "https://images.unsplash.com/photo-1571513722275-4b41940f54b8?w=900&q=75",
-      img2:  "https://images.unsplash.com/photo-1554412933-514a83d2f3c8?w=900&q=75",
-      img3:  "https://images.unsplash.com/photo-1581338834647-b0fb40704e21?w=900&q=75",
-      img4:  "https://images.unsplash.com/photo-1492447166138-50c3889fccb1?w=900&q=75",
-      img5:  "https://images.unsplash.com/photo-1569466896818-335b1bedfcce?w=900&q=75",
-      img6:  "https://images.unsplash.com/photo-1591348278863-a8fb3887e2aa?w=900&q=75",
-      img7:  "https://images.unsplash.com/photo-1605812860427-4024433a70fd?w=900&q=75",
-      imgJ1: "https://images.unsplash.com/photo-1611601322175-ef8ec8c85f01?w=1100&q=75",
-      imgJ2: "https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?w=1100&q=75",
-    };
+<main>
 
-    // ─── Inline SVG icons (Lucide-compatible, 24×24, 1.5px stroke) ─────────────
-    const Icon = ({ size = 18, children }) => (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
-           stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        {children}
-      </svg>
-    );
-    const IconSearch = (p) => <Icon {...p}><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></Icon>;
-    const IconUser   = (p) => <Icon {...p}><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></Icon>;
-    const IconBag    = (p) => <Icon {...p}><path d="M6 8h12l-1 12H7Z"/><path d="M9 8a3 3 0 0 1 6 0"/></Icon>;
-    const IconGlobe  = (p) => <Icon {...p}><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></Icon>;
-    const IconMenu   = (p) => <Icon {...p}><path d="M3 6h18M3 12h18M3 18h18"/></Icon>;
+  <!-- HERO -->
+  <section class="fl-hero">
+    <div class="fl-hero-text">
+      <div class="eyebrow">The summer edit · LXN season 2</div>
+      <h1 class="fl-hero-title">Pieces that feel <em>like you.</em></h1>
+      <p class="fl-hero-body">Quietly curated for diaspora professionals. Made for work, dinners, church, travel, and the everyday in between.</p>
+      <div class="fl-hero-ctas">
+        <button class="fl-btn fl-btn-primary">Shop the edit</button>
+        <a href="#" class="fl-btn fl-btn-link">Read the lookbook →</a>
+      </div>
+    </div>
+    <div class="fl-hero-image" style="background-image:url('https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=1600&q=80')">
+      <div class="fl-hero-caption">Photographed in Lagos. <em>Olu</em> wears Adirẹ wrap shirt, sand.</div>
+    </div>
+  </section>
 
-    // ─── HEADER ─────────────────────────────────────────────────────────────────
-    const SUBNAV = ["Shop", "Brands", "The edit", "Adorned", "Journal", "About", "Become a vendor"];
+  <!-- THE EDIT — product grid -->
+  <section class="fl-edit">
+    <div class="fl-section-head">
+      <div class="eyebrow">The edit · this week</div>
+      <h2 class="fl-section-title">Quietly considered.</h2>
+      <a href="#" class="fl-section-link">View all 28 pieces →</a>
+    </div>
+    <div class="fl-edit-grid">
 
-    function Header({ activeNav = "The edit", cartCount = 0 }) {
-      const [scrolled, setScrolled] = useState(false);
-      useEffect(() => {
-        const onScroll = () => setScrolled(window.scrollY > 80);
-        window.addEventListener("scroll", onScroll, { passive: true });
-        return () => window.removeEventListener("scroll", onScroll);
-      }, []);
+      <article class="fl-card">
+        <div class="fl-card-img">
+          <div class="fl-img-a" style="background-image:url('https://images.unsplash.com/photo-1571513722275-4b41940f54b8?w=900&q=75')"></div>
+          <div class="fl-img-b" style="background-image:url('https://images.unsplash.com/photo-1554412933-514a83d2f3c8?w=900&q=75')"></div>
+          <button class="fl-card-quick" aria-label="Quick add">+</button>
+        </div>
+        <div class="fl-card-meta">
+          <div class="fl-card-brand">Ọrun Atelier</div>
+          <div class="fl-card-title">Adirẹ wrap shirt</div>
+        </div>
+        <div class="fl-card-price">£215</div>
+      </article>
 
-      return (
-        <header className={"fl-header" + (scrolled ? " is-condensed" : "")}>
-          <div className="fl-announcement">
-            Free UK delivery on orders over £200 · We ship worldwide
-          </div>
-          <div className="fl-nav">
-            <div className="fl-nav-left">
-              <button className="fl-icon-btn fl-nav-burger" aria-label="Menu"><IconMenu /></button>
-              <a className="fl-nav-link"><IconGlobe size={14} /> <span>EN · GBP</span></a>
-            </div>
-            <a className="fl-wordmark" href="#" aria-label="Finelines home">Finel<em>i</em>nes</a>
-            <div className="fl-nav-right">
-              <button className="fl-icon-btn" aria-label="Search"><IconSearch /></button>
-              <button className="fl-icon-btn" aria-label="Account"><IconUser /></button>
-              <button className="fl-icon-btn fl-cart-btn" aria-label="Bag">
-                <IconBag />
-                {cartCount > 0 && <span className="fl-cart-badge">{cartCount}</span>}
-              </button>
-            </div>
-          </div>
-          <nav className="fl-subnav">
-            {SUBNAV.map((label) => (
-              <a key={label} href="#" className={"fl-subnav-link" + (label === activeNav ? " is-active" : "")}>
-                {label}
-              </a>
-            ))}
-          </nav>
-        </header>
-      );
-    }
+      <article class="fl-card">
+        <div class="fl-card-img">
+          <div class="fl-img-a" style="background-image:url('https://images.unsplash.com/photo-1581338834647-b0fb40704e21?w=900&q=75')"></div>
+          <div class="fl-img-b" style="background-image:url('https://images.unsplash.com/photo-1492447166138-50c3889fccb1?w=900&q=75')"></div>
+          <span class="fl-card-badge">New</span>
+          <button class="fl-card-quick" aria-label="Quick add">+</button>
+        </div>
+        <div class="fl-card-meta">
+          <div class="fl-card-brand">Layola</div>
+          <div class="fl-card-title">Wide-leg trouser — olive</div>
+        </div>
+        <div class="fl-card-price">£180</div>
+      </article>
 
-    // ─── HERO ────────────────────────────────────────────────────────────────────
-    function Hero() {
-      return (
-        <section className="fl-hero">
-          <div className="fl-hero-text">
-            <div className="eyebrow">The summer edit · LXN season 2</div>
-            <h1 className="fl-hero-title">
-              Pieces that feel <em>like you.</em>
-            </h1>
-            <p className="fl-hero-body">
-              Quietly curated for diaspora professionals. Made for work, dinners, church, travel, and the everyday in between.
-            </p>
-            <div className="fl-hero-ctas">
-              <button className="fl-btn fl-btn-primary">Shop the edit</button>
-              <a href="#" className="fl-btn fl-btn-link">Read the lookbook →</a>
-            </div>
-          </div>
-          <div className="fl-hero-image" style={{ backgroundImage: `url(${IMG.hero})` }}>
-            <div className="fl-hero-caption">
-              Photographed in Lagos. <em>Olu</em> wears Adirẹ wrap shirt, sand.
-            </div>
-          </div>
-        </section>
-      );
-    }
+      <article class="fl-card">
+        <div class="fl-card-img">
+          <div class="fl-img-a" style="background-image:url('https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=900&q=75')"></div>
+          <div class="fl-img-b" style="background-image:url('https://images.unsplash.com/photo-1569466896818-335b1bedfcce?w=900&q=75')"></div>
+          <button class="fl-card-quick" aria-label="Quick add">+</button>
+        </div>
+        <div class="fl-card-meta">
+          <div class="fl-card-brand">Akin &amp; Daughter</div>
+          <div class="fl-card-title">Hand-stitched tunic</div>
+        </div>
+        <div class="fl-card-price">£245</div>
+      </article>
 
-    // ─── PRODUCT CARD ────────────────────────────────────────────────────────────
-    function ProductCard({ title, brand, price, image, hoverImage, badge }) {
-      return (
-        <article className="fl-card">
-          <div className="fl-card-img">
-            <div className="fl-img-a" style={{ backgroundImage: `url(${image})` }} />
-            {hoverImage && <div className="fl-img-b" style={{ backgroundImage: `url(${hoverImage})` }} />}
-            {badge && <span className="fl-card-badge">{badge}</span>}
-            <button className="fl-card-quick" aria-label="Quick add">+</button>
-          </div>
-          <div className="fl-card-meta">
-            <div className="fl-card-brand">{brand}</div>
-            <div className="fl-card-title">{title}</div>
-          </div>
-          <div className="fl-card-price">£{price}</div>
-        </article>
-      );
-    }
+      <article class="fl-card">
+        <div class="fl-card-img">
+          <div class="fl-img-a" style="background-image:url('https://images.unsplash.com/photo-1591348278863-a8fb3887e2aa?w=900&q=75')"></div>
+          <div class="fl-img-b" style="background-image:url('https://images.unsplash.com/photo-1605812860427-4024433a70fd?w=900&q=75')"></div>
+          <button class="fl-card-quick" aria-label="Quick add">+</button>
+        </div>
+        <div class="fl-card-meta">
+          <div class="fl-card-brand">Adorned</div>
+          <div class="fl-card-title">Bronze brass cuff</div>
+        </div>
+        <div class="fl-card-price">£85</div>
+      </article>
 
-    // ─── EDIT GRID ───────────────────────────────────────────────────────────────
-    const PRODUCTS = [
-      { title: "Adirẹ wrap shirt",        brand: "Ọrun Atelier",    price: "215", image: IMG.img1, hoverImage: IMG.img2 },
-      { title: "Wide-leg trouser — olive", brand: "Layola",          price: "180", image: IMG.img3, hoverImage: IMG.img4, badge: "New" },
-      { title: "Hand-stitched tunic",      brand: "Akin & Daughter", price: "245", image: IMG.hero, hoverImage: IMG.img5 },
-      { title: "Bronze brass cuff",        brand: "Adorned",         price: "85",  image: IMG.img6, hoverImage: IMG.img7 },
-    ];
+    </div>
+  </section>
 
-    function EditGrid() {
-      return (
-        <section className="fl-edit">
-          <div className="fl-section-head">
-            <div className="eyebrow">The edit · this week</div>
-            <h2 className="fl-section-title">Quietly considered.</h2>
-            <a href="#" className="fl-section-link">View all 28 pieces →</a>
-          </div>
-          <div className="fl-edit-grid">
-            {PRODUCTS.map((p, i) => <ProductCard key={i} {...p} />)}
-          </div>
-        </section>
-      );
-    }
+  <!-- CATEGORY TILES -->
+  <section class="fl-tiles">
+    <a href="#" class="fl-tile">
+      <div class="fl-tile-img" style="background-image:url('https://images.unsplash.com/photo-1571513722275-4b41940f54b8?w=900&q=75')"></div>
+      <div class="fl-tile-overlay">
+        <div class="eyebrow fl-tile-eyebrow">For her</div>
+        <div class="fl-tile-label">Finelines Her</div>
+        <span class="fl-tile-cta">Enter</span>
+      </div>
+    </a>
+    <a href="#" class="fl-tile">
+      <div class="fl-tile-img" style="background-image:url('https://images.unsplash.com/photo-1492447166138-50c3889fccb1?w=900&q=75')"></div>
+      <div class="fl-tile-overlay">
+        <div class="eyebrow fl-tile-eyebrow">For him</div>
+        <div class="fl-tile-label">Finelines Him</div>
+        <span class="fl-tile-cta">Enter</span>
+      </div>
+    </a>
+    <a href="#" class="fl-tile">
+      <div class="fl-tile-img" style="background-image:url('https://images.unsplash.com/photo-1591348278863-a8fb3887e2aa?w=900&q=75')"></div>
+      <div class="fl-tile-overlay">
+        <div class="eyebrow fl-tile-eyebrow">Accessories</div>
+        <div class="fl-tile-label">Adorned</div>
+        <span class="fl-tile-cta">Enter</span>
+      </div>
+    </a>
+  </section>
 
-    // ─── CATEGORY TILES ──────────────────────────────────────────────────────────
-    function CategoryTile({ label, eyebrow, image }) {
-      return (
-        <a href="#" className="fl-tile">
-          <div className="fl-tile-img" style={{ backgroundImage: `url(${image})` }} />
-          <div className="fl-tile-overlay">
-            <div className="eyebrow fl-tile-eyebrow">{eyebrow}</div>
-            <div className="fl-tile-label">{label}</div>
-            <span className="fl-tile-cta">Enter</span>
-          </div>
-        </a>
-      );
-    }
+  <!-- ABOUT -->
+  <section class="fl-about">
+    <div class="fl-about-inner">
+      <div class="eyebrow fl-about-eyebrow">Why Finelines</div>
+      <h2 class="fl-about-title">
+        We're not a marketplace of thousands.<br>
+        We're a <em>trusted curator</em> who knows<br>
+        quality and stands behind every<br>
+        brand we feature.
+      </h2>
+      <div class="fl-about-cols">
+        <div>
+          <div class="fl-pillar-num">01</div>
+          <h4 class="fl-pillar-h">Rigorous curation</h4>
+          <p>Selected for craftsmanship, design integrity, and contemporary relevance — not trends.</p>
+        </div>
+        <div>
+          <div class="fl-pillar-num">02</div>
+          <h4 class="fl-pillar-h">Cultural trust</h4>
+          <p>We understand diaspora life. We position brands authentically. We build belonging.</p>
+        </div>
+        <div>
+          <div class="fl-pillar-num">03</div>
+          <h4 class="fl-pillar-h">Logistics, handled</h4>
+          <p>Shipment, quality assurance, returns — all coordinated so you don't have to think.</p>
+        </div>
+        <div>
+          <div class="fl-pillar-num">04</div>
+          <h4 class="fl-pillar-h">Brand partnership</h4>
+          <p>We work with designers on sizing, styling, positioning, storytelling — built to scale.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    function CategoryTiles() {
-      return (
-        <section className="fl-tiles">
-          <CategoryTile eyebrow="For her"     label="Finelines Her" image={IMG.img1} />
-          <CategoryTile eyebrow="For him"     label="Finelines Him" image={IMG.img4} />
-          <CategoryTile eyebrow="Accessories" label="Adorned"       image={IMG.img6} />
-        </section>
-      );
-    }
+  <!-- BRAND DIRECTORY -->
+  <section class="fl-brands">
+    <div class="fl-section-head">
+      <div class="eyebrow">Brand directory · curated houses</div>
+      <h2 class="fl-section-title">Forty<em>-two</em> brands. One quiet shortlist.</h2>
+      <a href="#" class="fl-section-link">Browse all brands →</a>
+    </div>
+    <div class="fl-brands-grid">
+      <a href="#" class="fl-brand-row">
+        <div class="fl-brand-name">Ọrun Atelier</div>
+        <div class="fl-brand-meta"><span>Lagos</span><span class="fl-brand-dot">·</span><span>Adirẹ · tailoring</span></div>
+        <div class="fl-brand-arrow">→</div>
+      </a>
+      <a href="#" class="fl-brand-row">
+        <div class="fl-brand-name">Layola</div>
+        <div class="fl-brand-meta"><span>London</span><span class="fl-brand-dot">·</span><span>Outerwear</span></div>
+        <div class="fl-brand-arrow">→</div>
+      </a>
+      <a href="#" class="fl-brand-row">
+        <div class="fl-brand-name">Akin &amp; Daughter</div>
+        <div class="fl-brand-meta"><span>Accra</span><span class="fl-brand-dot">·</span><span>Knitwear</span></div>
+        <div class="fl-brand-arrow">→</div>
+      </a>
+      <a href="#" class="fl-brand-row">
+        <div class="fl-brand-name">House of Iyemi</div>
+        <div class="fl-brand-meta"><span>Lagos</span><span class="fl-brand-dot">·</span><span>Occasion</span></div>
+        <div class="fl-brand-arrow">→</div>
+      </a>
+      <a href="#" class="fl-brand-row">
+        <div class="fl-brand-name">Ìdùn</div>
+        <div class="fl-brand-meta"><span>Abuja</span><span class="fl-brand-dot">·</span><span>Loungewear</span></div>
+        <div class="fl-brand-arrow">→</div>
+      </a>
+      <a href="#" class="fl-brand-row">
+        <div class="fl-brand-name">Adunni Studio</div>
+        <div class="fl-brand-meta"><span>Manchester</span><span class="fl-brand-dot">·</span><span>Jewellery</span></div>
+        <div class="fl-brand-arrow">→</div>
+      </a>
+    </div>
+  </section>
 
-    // ─── ABOUT ───────────────────────────────────────────────────────────────────
-    function About() {
-      return (
-        <section className="fl-about">
-          <div className="fl-about-inner">
-            <div className="eyebrow fl-about-eyebrow">Why Finelines</div>
-            <h2 className="fl-about-title">
-              We're not a marketplace of thousands.<br />
-              We're a <em>trusted curator</em> who knows<br />
-              quality and stands behind every<br />
-              brand we feature.
-            </h2>
-            <div className="fl-about-cols">
-              <div>
-                <div className="fl-pillar-num">01</div>
-                <h4 className="fl-pillar-h">Rigorous curation</h4>
-                <p>Selected for craftsmanship, design integrity, and contemporary relevance — not trends.</p>
-              </div>
-              <div>
-                <div className="fl-pillar-num">02</div>
-                <h4 className="fl-pillar-h">Cultural trust</h4>
-                <p>We understand diaspora life. We position brands authentically. We build belonging.</p>
-              </div>
-              <div>
-                <div className="fl-pillar-num">03</div>
-                <h4 className="fl-pillar-h">Logistics, handled</h4>
-                <p>Shipment, quality assurance, returns — all coordinated so you don't have to think.</p>
-              </div>
-              <div>
-                <div className="fl-pillar-num">04</div>
-                <h4 className="fl-pillar-h">Brand partnership</h4>
-                <p>We work with designers on sizing, styling, positioning, storytelling — built to scale.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-      );
-    }
+  <!-- JOURNAL -->
+  <section class="fl-journal">
+    <div class="fl-section-head">
+      <div class="eyebrow">The journal · stories from the houses</div>
+      <h2 class="fl-section-title">Letters, lookbooks, atelier visits.</h2>
+      <a href="#" class="fl-section-link">All stories →</a>
+    </div>
+    <div class="fl-journal-grid">
+      <article class="fl-journal-card">
+        <div class="fl-journal-img" style="background-image:url('https://images.unsplash.com/photo-1611601322175-ef8ec8c85f01?w=1100&q=75')"></div>
+        <div class="eyebrow fl-journal-eyebrow">Atelier · 6 min read</div>
+        <h3 class="fl-journal-title">Inside the indigo room at <em>Ọrun</em></h3>
+        <p class="fl-journal-dek">How a Lagos house is making age-old indigo dyeing precise enough to wear to the office on a Tuesday.</p>
+        <a href="#" class="fl-journal-read">Read the piece →</a>
+      </article>
+      <article class="fl-journal-card">
+        <div class="fl-journal-img" style="background-image:url('https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?w=1100&q=75')"></div>
+        <div class="eyebrow fl-journal-eyebrow">The edit · 4 min read</div>
+        <h3 class="fl-journal-title">Five pieces, infinite <em>Sundays</em></h3>
+        <p class="fl-journal-dek">A capsule built for slow brunches, long walks, and the occasional unplanned dinner with the in-laws.</p>
+        <a href="#" class="fl-journal-read">Read the piece →</a>
+      </article>
+    </div>
+  </section>
 
-    // ─── BRAND DIRECTORY ─────────────────────────────────────────────────────────
-    const BRANDS = [
-      { name: "Ọrun Atelier",    city: "Lagos",      focus: "Adirẹ · tailoring" },
-      { name: "Layola",          city: "London",     focus: "Outerwear" },
-      { name: "Akin & Daughter", city: "Accra",      focus: "Knitwear" },
-      { name: "House of Iyemi",  city: "Lagos",      focus: "Occasion" },
-      { name: "Ìdùn",            city: "Abuja",      focus: "Loungewear" },
-      { name: "Adunni Studio",   city: "Manchester", focus: "Jewellery" },
-    ];
+  <!-- NEWSLETTER -->
+  <section class="fl-newsletter">
+    <div class="fl-newsletter-inner">
+      <div class="eyebrow">Stay close</div>
+      <h2 class="fl-newsletter-title">First looks. <em>Quiet drops.</em><br>The occasional letter.</h2>
+      <p class="fl-newsletter-dek">No daily emails. We write when there's something worth writing about.</p>
+      <form class="fl-newsletter-form" id="newsletter-form">
+        <input type="email" placeholder="Your email" aria-label="Email address" required>
+        <button type="submit">Join the list</button>
+      </form>
+      <div class="fl-newsletter-thanks" id="newsletter-thanks" style="display:none">
+        <span>✓</span> You're on the list. Watch your inbox for the first letter.
+      </div>
+    </div>
+  </section>
 
-    function BrandDirectory() {
-      return (
-        <section className="fl-brands">
-          <div className="fl-section-head">
-            <div className="eyebrow">Brand directory · curated houses</div>
-            <h2 className="fl-section-title">Forty<em>-two</em> brands. One quiet shortlist.</h2>
-            <a href="#" className="fl-section-link">Browse all brands →</a>
-          </div>
-          <div className="fl-brands-grid">
-            {BRANDS.map((b) => (
-              <a key={b.name} href="#" className="fl-brand-row">
-                <div className="fl-brand-name">{b.name}</div>
-                <div className="fl-brand-meta">
-                  <span>{b.city}</span>
-                  <span className="fl-brand-dot">·</span>
-                  <span>{b.focus}</span>
-                </div>
-                <div className="fl-brand-arrow">→</div>
-              </a>
-            ))}
-          </div>
-        </section>
-      );
-    }
+</main>
 
-    // ─── JOURNAL ─────────────────────────────────────────────────────────────────
-    function JournalCard({ eyebrow, title, accent, dek, readMin, image }) {
-      return (
-        <article className="fl-journal-card">
-          <div className="fl-journal-img" style={{ backgroundImage: `url(${image})` }} />
-          <div className="eyebrow fl-journal-eyebrow">{eyebrow} · {readMin} min read</div>
-          <h3 className="fl-journal-title">{title} <em>{accent}</em></h3>
-          <p className="fl-journal-dek">{dek}</p>
-          <a href="#" className="fl-journal-read">Read the piece →</a>
-        </article>
-      );
-    }
+<!-- FOOTER -->
+<footer class="fl-footer">
+  <div class="fl-footer-inner">
+    <div class="fl-footer-grid">
+      <div class="fl-footer-brand">
+        <div class="fl-footer-wordmark">Finel<em>i</em>nes</div>
+        <p>The global home of premium African fashion. Made for the diaspora — for work, dinners, church, travel, everyday life.</p>
+        <div class="fl-footer-social">
+          <a href="https://instagram.com/finelines_uk" target="_blank" rel="noopener">Instagram</a>
+          <a href="mailto:info@shopfinelines.com">info@shopfinelines.com</a>
+        </div>
+      </div>
+      <div>
+        <h5>Shop</h5>
+        <ul>
+          <li><a href="#">New arrivals</a></li>
+          <li><a href="#">The edit</a></li>
+          <li><a href="#">Her</a></li>
+          <li><a href="#">Him</a></li>
+          <li><a href="#">Adorned</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>House</h5>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Brand directory</a></li>
+          <li><a href="#">Journal</a></li>
+          <li><a href="#">Become a vendor</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Help</h5>
+        <ul>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Shipping &amp; delivery</a></li>
+          <li><a href="#">Returns</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Account</h5>
+        <ul>
+          <li><a href="#">Sign in</a></li>
+          <li><a href="#">Create account</a></li>
+          <li><a href="#">Wishlist</a></li>
+          <li><a href="#">Track order</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="fl-footer-legal">
+      <span>© 2026 Finelines International. Curated in London &amp; Lagos.</span>
+      <span><a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Cookies</a></span>
+    </div>
+  </div>
+</footer>
 
-    function Journal() {
-      return (
-        <section className="fl-journal">
-          <div className="fl-section-head">
-            <div className="eyebrow">The journal · stories from the houses</div>
-            <h2 className="fl-section-title">Letters, lookbooks, atelier visits.</h2>
-            <a href="#" className="fl-section-link">All stories →</a>
-          </div>
-          <div className="fl-journal-grid">
-            <JournalCard
-              eyebrow="Atelier"
-              title="Inside the indigo room at"
-              accent="Ọrun"
-              dek="How a Lagos house is making age-old indigo dyeing precise enough to wear to the office on a Tuesday."
-              readMin="6"
-              image={IMG.imgJ1}
-            />
-            <JournalCard
-              eyebrow="The edit"
-              title="Five pieces, infinite"
-              accent="Sundays"
-              dek="A capsule built for slow brunches, long walks, and the occasional unplanned dinner with the in-laws."
-              readMin="4"
-              image={IMG.imgJ2}
-            />
-          </div>
-        </section>
-      );
-    }
+<script>
+  // Sticky condensed header
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('is-condensed', window.scrollY > 80);
+  }, { passive: true });
 
-    // ─── NEWSLETTER ──────────────────────────────────────────────────────────────
-    function Newsletter() {
-      const [email, setEmail] = useState("");
-      const [submitted, setSubmitted] = useState(false);
+  // Newsletter form
+  const form = document.getElementById('newsletter-form');
+  const thanks = document.getElementById('newsletter-thanks');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    form.style.display = 'none';
+    thanks.style.display = 'inline-flex';
+  });
+</script>
 
-      const submit = (e) => {
-        e.preventDefault();
-        if (!email.trim()) return;
-        setSubmitted(true);
-      };
-
-      return (
-        <section className="fl-newsletter">
-          <div className="fl-newsletter-inner">
-            <div className="eyebrow">Stay close</div>
-            <h2 className="fl-newsletter-title">
-              First looks. <em>Quiet drops.</em><br />
-              The occasional letter.
-            </h2>
-            <p className="fl-newsletter-dek">
-              No daily emails. We write when there's something worth writing about.
-            </p>
-            {!submitted ? (
-              <form className="fl-newsletter-form" onSubmit={submit}>
-                <input
-                  type="email"
-                  placeholder="Your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  aria-label="Email address"
-                  required
-                />
-                <button type="submit">Join the list</button>
-              </form>
-            ) : (
-              <div className="fl-newsletter-thanks">
-                <span>✓</span> You're on the list. Watch your inbox for the first letter.
-              </div>
-            )}
-          </div>
-        </section>
-      );
-    }
-
-    // ─── FOOTER ──────────────────────────────────────────────────────────────────
-    function Footer() {
-      return (
-        <footer className="fl-footer">
-          <div className="fl-footer-inner">
-            <div className="fl-footer-grid">
-              <div className="fl-footer-brand">
-                <div className="fl-footer-wordmark">Finel<em>i</em>nes</div>
-                <p>The global home of premium African fashion. Made for the diaspora — for work, dinners, church, travel, everyday life.</p>
-                <div className="fl-footer-social">
-                  <a href="https://instagram.com/finelines_uk" target="_blank" rel="noopener">Instagram</a>
-                  <a href="mailto:info@shopfinelines.com">info@shopfinelines.com</a>
-                </div>
-              </div>
-              <div>
-                <h5>Shop</h5>
-                <ul>
-                  <li><a href="#">New arrivals</a></li>
-                  <li><a href="#">The edit</a></li>
-                  <li><a href="#">Her</a></li>
-                  <li><a href="#">Him</a></li>
-                  <li><a href="#">Adorned</a></li>
-                </ul>
-              </div>
-              <div>
-                <h5>House</h5>
-                <ul>
-                  <li><a href="#">About</a></li>
-                  <li><a href="#">Brand directory</a></li>
-                  <li><a href="#">Journal</a></li>
-                  <li><a href="#">Become a vendor</a></li>
-                </ul>
-              </div>
-              <div>
-                <h5>Help</h5>
-                <ul>
-                  <li><a href="#">FAQ</a></li>
-                  <li><a href="#">Shipping &amp; delivery</a></li>
-                  <li><a href="#">Returns</a></li>
-                  <li><a href="#">Contact</a></li>
-                </ul>
-              </div>
-              <div>
-                <h5>Account</h5>
-                <ul>
-                  <li><a href="#">Sign in</a></li>
-                  <li><a href="#">Create account</a></li>
-                  <li><a href="#">Wishlist</a></li>
-                  <li><a href="#">Track order</a></li>
-                </ul>
-              </div>
-            </div>
-            <div className="fl-footer-legal">
-              <span>© 2026 Finelines International. Curated in London &amp; Lagos.</span>
-              <span>
-                <a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Cookies</a>
-              </span>
-            </div>
-          </div>
-        </footer>
-      );
-    }
-
-    // ─── APP ─────────────────────────────────────────────────────────────────────
-    function App() {
-      const [cartCount] = useState(2);
-      return (
-        <>
-          <Header activeNav="The edit" cartCount={cartCount} />
-          <main>
-            <Hero />
-            <EditGrid />
-            <CategoryTiles />
-            <About />
-            <BrandDirectory />
-            <Journal />
-            <Newsletter />
-          </main>
-          <Footer />
-        </>
-      );
-    }
-
-    ReactDOM.createRoot(document.getElementById("app")).render(<App />);
-  </script>
 </body>
 </html>
