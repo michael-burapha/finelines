@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Brand Directory — Finelines</title>
+  <meta name="description" content="Forty-two rigorously curated African fashion brands. One quiet shortlist — selected for craftsmanship, design integrity, and contemporary relevance.">
+  <link rel="icon" type="image/svg+xml" href="assets/logo-monogram-finelines.svg">
+  <link rel="stylesheet" href="colors_and_type.css">
+  <link rel="stylesheet" href="homepage.css">
+  <style>
+    /* ── Brand Directory page styles ── */
+    .bd-hero {
+      background: var(--ivory-deep);
+      padding: var(--space-10) var(--gutter);
+      max-width: var(--page-max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-9);
+      align-items: end;
+    }
+    .bd-hero-eyebrow { margin-bottom: var(--space-3); }
+    .bd-hero-title {
+      font-size: clamp(40px, 5vw, 72px);
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      max-width: 16ch;
+    }
+    .bd-hero-title em { font-style: italic; }
+    .bd-hero-right {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+      padding-bottom: 6px;
+    }
+    .bd-hero-body {
+      font-size: 17px;
+      line-height: 1.6;
+      color: var(--paper-700);
+      max-width: 40ch;
+    }
+    .bd-stats {
+      display: flex;
+      gap: var(--space-8);
+    }
+    .bd-stat-num {
+      font-family: var(--font-display);
+      font-size: 44px;
+      line-height: 1;
+      color: var(--ink);
+    }
+    .bd-stat-label {
+      font-size: 11px;
+      letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      margin-top: 4px;
+    }
+
+    /* ── Filters ── */
+    .bd-filters {
+      max-width: var(--page-max);
+      margin: 0 auto;
+      padding: var(--space-6) var(--gutter);
+      display: flex;
+      gap: var(--space-3);
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .bd-filter-label {
+      font-size: 11px;
+      letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      margin-right: var(--space-2);
+    }
+    .bd-filter-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--ink);
+      font: 500 11px/1 var(--font-sans);
+      letter-spacing: var(--tracking-button);
+      text-transform: uppercase;
+      padding: 9px 16px;
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+    }
+    .bd-filter-btn:hover,
+    .bd-filter-btn.is-active {
+      background: var(--ink);
+      color: var(--ivory);
+      border-color: var(--ink);
+    }
+
+    /* ── Featured brand ── */
+    .bd-featured {
+      max-width: var(--page-max);
+      margin: 0 auto;
+      padding: var(--space-9) var(--gutter);
+    }
+    .bd-featured-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: var(--border);
+    }
+    .bd-featured-img {
+      aspect-ratio: 4/3;
+      background-size: cover;
+      background-position: center;
+    }
+    .bd-featured-img-2 {
+      aspect-ratio: 4/3;
+      background-size: cover;
+      background-position: center;
+    }
+    .bd-featured-content {
+      background: var(--ivory);
+      padding: var(--space-8);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: var(--space-4);
+    }
+    .bd-featured-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase;
+      color: var(--bronze-500);
+    }
+    .bd-featured-tag::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 1px;
+      background: var(--bronze-500);
+    }
+    .bd-featured-name {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 4vw, 56px);
+      line-height: 1.0;
+    }
+    .bd-featured-city {
+      font-size: 11px;
+      letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase;
+      color: var(--fg-muted);
+    }
+    .bd-featured-desc {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--paper-700);
+      max-width: 40ch;
+    }
+    .bd-featured-meta {
+      display: flex;
+      gap: var(--space-5);
+      padding-top: var(--space-3);
+      border-top: 1px solid var(--border);
+    }
+    .bd-featured-meta-item { font-size: 12px; color: var(--fg-muted); }
+    .bd-featured-meta-item strong { display: block; font-weight: 500; color: var(--ink); font-size: 13px; margin-bottom: 2px; }
+
+    /* ── Brand grid ── */
+    .bd-section-title {
+      max-width: var(--page-max);
+      margin: 0 auto;
+      padding: var(--space-5) var(--gutter) var(--space-4);
+      font-size: 11px;
+      letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      border-top: 1px solid var(--border);
+    }
+    .bd-grid {
+      max-width: var(--page-max);
+      margin: 0 auto;
+      padding: 0 var(--gutter) var(--space-10);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-7) var(--space-6);
+    }
+    .bd-card {
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+    }
+    .bd-card-img {
+      aspect-ratio: 4/5;
+      background-size: cover;
+      background-position: center;
+      background-color: var(--bone);
+      position: relative;
+      overflow: hidden;
+    }
+    .bd-card-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 55%, rgba(28,28,26,0.45) 100%);
+      opacity: 0;
+      transition: opacity var(--dur-slow) var(--ease);
+    }
+    .bd-card:hover .bd-card-img-overlay { opacity: 1; }
+    .bd-card-view {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(8px);
+      background: var(--ivory);
+      color: var(--ink);
+      font: 500 11px/1 var(--font-sans);
+      letter-spacing: var(--tracking-button);
+      text-transform: uppercase;
+      padding: 12px 24px;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity var(--dur-base) var(--ease), transform var(--dur-base) var(--ease);
+    }
+    .bd-card:hover .bd-card-view { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .bd-card-body { padding-top: var(--space-4); }
+    .bd-card-focus {
+      font-size: 10px;
+      letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase;
+      color: var(--bronze-500);
+      margin-bottom: 6px;
+    }
+    .bd-card-name {
+      font-family: var(--font-display);
+      font-size: 28px;
+      line-height: 1.05;
+      color: var(--ink);
+    }
+    .bd-card-location {
+      font-size: 12px;
+      color: var(--fg-muted);
+      margin-top: 4px;
+      letter-spacing: 0.04em;
+    }
+    .bd-card-desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--paper-600);
+      margin-top: var(--space-3);
+      max-width: 36ch;
+    }
+
+    /* ── Become a vendor CTA ── */
+    .bd-vendor-cta {
+      background: var(--olive-500);
+      color: var(--ivory);
+      padding: var(--space-9) var(--gutter);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-7);
+      max-width: var(--page-max);
+      margin: 0 auto;
+    }
+    .bd-vendor-left { max-width: 52ch; }
+    .bd-vendor-eyebrow { color: rgba(247,244,239,0.65); margin-bottom: var(--space-3); }
+    .bd-vendor-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 3vw, 44px);
+      line-height: 1.1;
+      color: var(--ivory);
+    }
+    .bd-vendor-title em { font-style: italic; color: var(--bronze-500); }
+    .bd-vendor-body { font-size: 15px; line-height: 1.6; color: rgba(247,244,239,0.75); margin-top: var(--space-4); }
+    .bd-vendor-btn {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      font: 500 13px/1 var(--font-sans);
+      letter-spacing: var(--tracking-button);
+      text-transform: uppercase;
+      padding: 20px 40px;
+      background: var(--ivory);
+      color: var(--ink);
+      border: 0;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background var(--dur-base) var(--ease);
+      white-space: nowrap;
+    }
+    .bd-vendor-btn:hover { background: var(--ivory-deep); }
+
+    /* ── Responsive ── */
+    @media (max-width: 1100px) {
+      .bd-hero, .bd-featured-inner, .bd-vendor-cta { grid-template-columns: 1fr; }
+      .bd-grid { grid-template-columns: repeat(2, 1fr); }
+      .bd-featured-content { padding: var(--space-6); }
+    }
+    @media (max-width: 760px) {
+      .bd-hero { padding: var(--space-8) var(--gutter-sm); }
+      .bd-grid { grid-template-columns: 1fr; padding: 0 var(--gutter-sm) var(--space-9); }
+      .bd-filters { padding: var(--space-5) var(--gutter-sm); }
+      .bd-vendor-cta { flex-direction: column; padding: var(--space-8) var(--gutter-sm); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="fl-header" id="site-header">
+  <div class="fl-announcement">Free UK delivery on orders over £200 · We ship worldwide</div>
+  <div class="fl-nav">
+    <div class="fl-nav-left">
+      <button class="fl-icon-btn fl-nav-burger" aria-label="Menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <a class="fl-nav-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+        <span>EN · GBP</span>
+      </a>
+    </div>
+    <a class="fl-wordmark" href="index.html" aria-label="Finelines home">Finel<em>i</em>nes</a>
+    <div class="fl-nav-right">
+      <button class="fl-icon-btn" aria-label="Search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </button>
+      <button class="fl-icon-btn" aria-label="Account">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
+      </button>
+      <button class="fl-icon-btn fl-cart-btn" aria-label="Bag">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7Z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg>
+        <span class="fl-cart-badge">2</span>
+      </button>
+    </div>
+  </div>
+  <nav class="fl-subnav">
+    <a href="#" class="fl-subnav-link">Shop</a>
+    <a href="brands.html" class="fl-subnav-link is-active">Brands</a>
+    <a href="#" class="fl-subnav-link">The edit</a>
+    <a href="#" class="fl-subnav-link">Adorned</a>
+    <a href="#" class="fl-subnav-link">Journal</a>
+    <a href="#" class="fl-subnav-link">About</a>
+    <a href="#" class="fl-subnav-link">Become a vendor</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <div class="bd-hero">
+    <div class="bd-hero-left">
+      <div class="eyebrow bd-hero-eyebrow">Brand directory</div>
+      <h1 class="bd-hero-title">The houses behind <em>every piece.</em></h1>
+    </div>
+    <div class="bd-hero-right">
+      <p class="bd-hero-body">Every brand on Finelines is selected by hand. We look for craftsmanship, design integrity, production ethics, and contemporary relevance. Not trends — character.</p>
+      <div class="bd-stats">
+        <div>
+          <div class="bd-stat-num">42</div>
+          <div class="bd-stat-label">Curated brands</div>
+        </div>
+        <div>
+          <div class="bd-stat-num">11</div>
+          <div class="bd-stat-label">Countries</div>
+        </div>
+        <div>
+          <div class="bd-stat-num">100%</div>
+          <div class="bd-stat-label">Verified</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="bd-filters">
+    <span class="bd-filter-label">Filter</span>
+    <button class="bd-filter-btn is-active" data-filter="all">All brands</button>
+    <button class="bd-filter-btn" data-filter="her">Her</button>
+    <button class="bd-filter-btn" data-filter="him">Him</button>
+    <button class="bd-filter-btn" data-filter="adorned">Adorned</button>
+    <button class="bd-filter-btn" data-filter="lagos">Lagos</button>
+    <button class="bd-filter-btn" data-filter="london">London</button>
+    <button class="bd-filter-btn" data-filter="accra">Accra</button>
+  </div>
+
+  <!-- FEATURED BRAND — Maki Oh -->
+  <div class="bd-featured">
+    <div class="eyebrow" style="margin-bottom:var(--space-4);color:var(--fg-muted)">Featured house</div>
+    <div class="bd-featured-inner">
+      <div class="bd-featured-img" style="background-image:url('https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?w=1200&q=80')"></div>
+      <div class="bd-featured-content">
+        <div class="bd-featured-tag">Womenswear · Adirẹ · Tailoring</div>
+        <div>
+          <div class="bd-featured-city">Lagos, Nigeria · Est. 2010</div>
+          <div class="bd-featured-name">Maki Oh</div>
+        </div>
+        <p class="bd-featured-desc">
+          Founded by Amaka Osakwe, Maki Oh fuses traditional Nigerian dye methods with refined contemporary tailoring. The brand's adirẹ process — cassava paste resist on cotton, hand-dipped in indigo — means no two pieces are identical. Worn by Michelle Obama. Nominated for the LVMH Prize.
+        </p>
+        <div class="bd-featured-meta">
+          <div class="bd-featured-meta-item"><strong>Signature</strong>Hand-dyed Adirẹ</div>
+          <div class="bd-featured-meta-item"><strong>Price range</strong>£180 – £620</div>
+          <div class="bd-featured-meta-item"><strong>Ships from</strong>Lagos</div>
+        </div>
+        <div style="margin-top:var(--space-4)">
+          <a href="#" class="fl-btn fl-btn-primary" style="display:inline-flex">View brand</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ALL BRANDS GRID -->
+  <div class="bd-section-title">All brands · A – Z</div>
+
+  <div class="bd-grid">
+
+    <!-- Labrum London -->
+    <a href="#" class="bd-card" data-tags="him london">
+      <div class="bd-card-img" style="background-image:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=75')">
+        <div class="bd-card-img-overlay"></div>
+        <div class="bd-card-view">View brand</div>
+      </div>
+      <div class="bd-card-body">
+        <div class="bd-card-focus">Tailoring · Menswear</div>
+        <div class="bd-card-name">Labrum London</div>
+        <div class="bd-card-location">London, UK · Est. 2014</div>
+        <p class="bd-card-desc">Foday Dumbuya weaves untold West African stories into precise British tailoring. Every garment carries histories and traditions from Sierra Leone — worn to Selfridges, Arsenal, and the Sierra Leone Olympic team.</p>
+      </div>
+    </a>
+
+    <!-- Christie Brown -->
+    <a href="#" class="bd-card" data-tags="her accra">
+      <div class="bd-card-img" style="background-image:url('https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&q=75')">
+        <div class="bd-card-img-overlay"></div>
+        <div class="bd-card-view">View brand</div>
+      </div>
+      <div class="bd-card-body">
+        <div class="bd-card-focus">Womenswear · Occasion</div>
+        <div class="bd-card-name">Christie Brown</div>
+        <div class="bd-card-location">Accra, Ghana · Est. 2008</div>
+        <p class="bd-card-desc">Named after founder Aisha Ayensu's grandmother, this luxury Ghanaian house reinterprets traditional artisanal techniques into modern silhouettes. A consistent presence at Paris Fashion Week and Vogue Italia.</p>
+      </div>
+    </a>
+
+    <!-- Post Imperial -->
+    <a href="#" class="bd-card" data-tags="him lagos">
+      <div class="bd-card-img" style="background-image:url('https://images.unsplash.com/photo-1617137968427-85924c800a22?w=800&q=75')">
+        <div class="bd-card-img-overlay"></div>
+        <div class="bd-card-view">View brand</div>
+      </div>
+      <div class="bd-card-body">
+        <div class="bd-card-focus">Menswear · Adirẹ</div>
+        <div class="bd-card-name">Post Imperial</div>
+        <div class="bd-card-location">Lagos, Nigeria · Est. 2014</div>
+        <p class="bd-card-desc">Niyi Okuboyejo's Lagos-made menswear is a platform for decolonised design — shirts hand-dyed in indigo by Yoruba artisans, every stitch sourced and finished locally. Dressed Taraji P. Henson at the 2025 Met Gala.</p>
+      </div>
+    </a>
+
+    <!-- Dye Lab -->
+    <a href="#" class="bd-card" data-tags="her lagos">
+      <div class="bd-card-img" style="background-image:url('https://images.unsplash.com/photo-1603217039863-aa0c865404f7?w=800&q=75')">
+        <div class="bd-card-img-overlay"></div>
+        <div class="bd-card-view">View brand</div>
+      </div>
+      <div class="bd-card-body">
+        <div class="bd-card-focus">Loungewear · Adirẹ</div>
+        <div class="bd-card-name">Dye Lab</div>
+        <div class="bd-card-location">Lagos, Nigeria · Est. 2020</div>
+        <p class="bd-card-desc">Rukky Ladoja's small-batch artisanal label celebrates Yoruba dyeing — hand-dipped Adirẹ and Aso-Oke kaftans, kimonos, and lounge sets produced in zero-waste batches with locally-sourced cloth. Collaboration with Anya Hindmarch.</p>
+      </div>
+    </a>
+
+    <!-- Grass-fields -->
+    <a href="#" class="bd-card" data-tags="her london">
+      <div class="bd-card-img" style="background-image:url('https://images.unsplash.com/photo-1551803091-e20673f15770?w=800&q=75')">
+        <div class="bd-card-img-overlay"></div>
+        <div class="bd-card-view">View brand</div>
+      </div>
+      <div class="bd-card-body">
+        <div class="bd-card-focus">Womenswear · Prints</div>
+        <div class="bd-card-name">Grass-fields</div>
+        <div class="bd-card-location">London, UK · Est. 2013</div>
+        <p class="bd-card-desc">Twin sisters Christelle and Michelle Nganhou founded this Cameroonian-rooted label to redefine African fashion on the world stage. Over 80% made in Africa by skilled artisans. Now an eight-figure brand with global reach.</p>
+      </div>
+    </a>
+
+    <!-- Lala Salama -->
+    <a href="#" class="bd-card" data-tags="adorned london">
+      <div class="bd-card-img" style="background-image:url('https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&q=75')">
+        <div class="bd-card-img-overlay"></div>
+        <div class="bd-card-view">View brand</div>
+      </div>
+      <div class="bd-card-body">
+        <div class="bd-card-focus">Jewellery · Accessories</div>
+        <div class="bd-card-name">Lala Salama</div>
+        <div class="bd-card-location">London, UK · Est. 2018</div>
+        <p class="bd-card-desc">A women-led studio designing ethical, handmade jewellery in collaboration with artisans across East Africa. Each piece celebrates traditional craft while fitting seamlessly into contemporary wardrobes. Kiswahili for "sleep in peace."</p>
+      </div>
+    </a>
+
+    <!-- Adele Dejak -->
+    <a href="#" class="bd-card" data-tags="adorned">
+      <div class="bd-card-img" style="background-image:url('https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=75')">
+        <div class="bd-card-img-overlay"></div>
+        <div class="bd-card-view">View brand</div>
+      </div>
+      <div class="bd-card-body">
+        <div class="bd-card-focus">Fine Jewellery</div>
+        <div class="bd-card-name">Adele Dejak</div>
+        <div class="bd-card-location">Nairobi, Kenya · Est. 2008</div>
+        <p class="bd-card-desc">Luxury statement jewellery handcrafted in Nairobi using reclaimed brass, horn, and mixed metals. Bold scale, quiet luxury — pieces that carry geography, time, and story in every form. Stocked at Harrods.</p>
+      </div>
+    </a>
+
+    <!-- Abiola Olusola -->
+    <a href="#" class="bd-card" data-tags="her lagos">
+      <div class="bd-card-img" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=75')">
+        <div class="bd-card-img-overlay"></div>
+        <div class="bd-card-view">View brand</div>
+      </div>
+      <div class="bd-card-body">
+        <div class="bd-card-focus">Womenswear · Tailoring</div>
+        <div class="bd-card-name">Abiola Olusola</div>
+        <div class="bd-card-location">Lagos, Nigeria · Est. 2016</div>
+        <p class="bd-card-desc">Elegant minimalism rooted in Yoruba heritage — architectural tailoring and organic textures with subtle nods to ceremonial dress codes. Debuted at London Fashion Week 2026 via Brand63Africa's Harrods showcase.</p>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- BECOME A VENDOR CTA -->
+  <div class="bd-vendor-cta">
+    <div class="bd-vendor-left">
+      <div class="eyebrow bd-vendor-eyebrow">For designers</div>
+      <h2 class="bd-vendor-title">Your craft deserves a <em>global stage.</em></h2>
+      <p class="bd-vendor-body">We're always looking for brands with something true to say. If your work is rooted in craftsmanship, designed with integrity, and made to be worn beyond the occasion — tell us about it.</p>
+    </div>
+    <a href="#" class="bd-vendor-btn">Apply to join →</a>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="fl-footer">
+  <div class="fl-footer-inner">
+    <div class="fl-footer-grid">
+      <div class="fl-footer-brand">
+        <div class="fl-footer-wordmark">Finel<em>i</em>nes</div>
+        <p>The global home of premium African fashion. Made for the diaspora — for work, dinners, church, travel, everyday life.</p>
+        <div class="fl-footer-social">
+          <a href="https://instagram.com/finelines_uk" target="_blank" rel="noopener">Instagram</a>
+          <a href="mailto:info@shopfinelines.com">info@shopfinelines.com</a>
+        </div>
+      </div>
+      <div>
+        <h5>Shop</h5>
+        <ul><li><a href="#">New arrivals</a></li><li><a href="#">The edit</a></li><li><a href="#">Her</a></li><li><a href="#">Him</a></li><li><a href="#">Adorned</a></li></ul>
+      </div>
+      <div>
+        <h5>House</h5>
+        <ul><li><a href="#">About</a></li><li><a href="brands.html">Brand directory</a></li><li><a href="#">Journal</a></li><li><a href="#">Become a vendor</a></li></ul>
+      </div>
+      <div>
+        <h5>Help</h5>
+        <ul><li><a href="#">FAQ</a></li><li><a href="#">Shipping &amp; delivery</a></li><li><a href="#">Returns</a></li><li><a href="#">Contact</a></li></ul>
+      </div>
+      <div>
+        <h5>Account</h5>
+        <ul><li><a href="#">Sign in</a></li><li><a href="#">Create account</a></li><li><a href="#">Wishlist</a></li><li><a href="#">Track order</a></li></ul>
+      </div>
+    </div>
+    <div class="fl-footer-legal">
+      <span>© 2026 Finelines International. Curated in London &amp; Lagos.</span>
+      <span><a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Cookies</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Sticky header
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('is-condensed', window.scrollY > 80);
+  }, { passive: true });
+
+  // Filter buttons
+  const filterBtns = document.querySelectorAll('.bd-filter-btn');
+  const cards = document.querySelectorAll('.bd-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      const filter = btn.dataset.filter;
+      cards.forEach(card => {
+        const tags = card.dataset.tags || '';
+        card.style.display = (filter === 'all' || tags.includes(filter)) ? '' : 'none';
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
