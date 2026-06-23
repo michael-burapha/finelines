@@ -1,0 +1,765 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AFUME — Brand — Finelines</title>
+  <meta name="description" content="Lagos-based womenswear brand fusing adire and asooke textile artistry with contemporary silhouettes. Kimonos, wrap dresses, co-ord sets and more.">
+  <link rel="icon" type="image/svg+xml" href="assets/logo-monogram-finelines.svg">
+  <link rel="stylesheet" href="colors_and_type.css">
+  <link rel="stylesheet" href="homepage.css">
+  <style>
+    /* ── Brand hero ── */
+    .br-hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 560px;
+      max-width: var(--page-max);
+      margin: 0 auto;
+    }
+    .br-hero-img {
+      background-size: cover;
+      background-position: center top;
+      min-height: 480px;
+    }
+    .br-hero-content {
+      background: var(--ivory-deep);
+      padding: var(--space-9) var(--space-8);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: var(--space-5);
+    }
+    .br-hero-eyebrow { color: var(--bronze-500); }
+    .br-hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 5vw, 80px);
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+    }
+    .br-hero-location {
+      font-size: 11px;
+      letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase;
+      color: var(--fg-muted);
+    }
+    .br-hero-desc {
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--paper-700);
+      max-width: 44ch;
+    }
+    .br-hero-meta {
+      display: flex;
+      gap: var(--space-6);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--border);
+    }
+    .br-hero-meta-item { font-size: 12px; color: var(--fg-muted); }
+    .br-hero-meta-item strong { display: block; font-weight: 500; color: var(--ink); font-size: 13px; margin-bottom: 2px; }
+
+    /* ── Filters ── */
+    .br-filters {
+      max-width: var(--page-max);
+      margin: 0 auto;
+      padding: var(--space-6) var(--gutter);
+      display: flex;
+      gap: var(--space-3);
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .br-filter-label {
+      font-size: 11px;
+      letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      margin-right: var(--space-2);
+    }
+    .br-filter-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--ink);
+      font: 500 11px/1 var(--font-sans);
+      letter-spacing: var(--tracking-button);
+      text-transform: uppercase;
+      padding: 9px 16px;
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+    }
+    .br-filter-btn:hover,
+    .br-filter-btn.is-active {
+      background: var(--ink);
+      color: var(--ivory);
+      border-color: var(--ink);
+    }
+
+    /* ── Product grid ── */
+    .br-count {
+      max-width: var(--page-max);
+      margin: 0 auto;
+      padding: var(--space-5) var(--gutter) var(--space-4);
+      font-size: 11px;
+      letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase;
+      color: var(--fg-muted);
+    }
+    .br-grid {
+      max-width: var(--page-max);
+      margin: 0 auto;
+      padding: 0 var(--gutter) var(--space-10);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-6) var(--space-5);
+    }
+    .br-card {
+      display: flex;
+      flex-direction: column;
+      cursor: default;
+    }
+    .br-card-img-wrap {
+      aspect-ratio: 4/5;
+      position: relative;
+      overflow: hidden;
+      background: var(--bone);
+    }
+    .br-card-img,
+    .br-card-img-alt {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center top;
+      transition: opacity var(--dur-image) var(--ease);
+    }
+    .br-card-img-alt { opacity: 0; }
+    .br-card:hover .br-card-img-alt { opacity: 1; }
+    .br-card-body { padding-top: var(--space-3); }
+    .br-card-cat {
+      font-size: 10px;
+      letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase;
+      color: var(--bronze-500);
+      margin-bottom: 5px;
+    }
+    .br-card-name {
+      font-family: var(--font-display);
+      font-size: 20px;
+      line-height: 1.15;
+      color: var(--ink);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1200px) {
+      .br-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 900px) {
+      .br-hero { grid-template-columns: 1fr; }
+      .br-hero-img { min-height: 380px; }
+      .br-hero-content { padding: var(--space-7) var(--space-6); }
+      .br-grid { grid-template-columns: repeat(2, 1fr); padding: 0 var(--gutter-sm) var(--space-9); }
+      .br-filters { padding: var(--space-5) var(--gutter-sm); }
+      .br-count { padding: var(--space-5) var(--gutter-sm) var(--space-3); }
+    }
+    @media (max-width: 560px) {
+      .br-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-4) var(--space-3); }
+      .br-hero-meta { flex-wrap: wrap; gap: var(--space-4); }
+    }
+
+    /* ── Product Drawer ── */
+    .pd-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,.45);
+      z-index: 200; opacity: 0; pointer-events: none;
+      transition: opacity .35s var(--ease);
+    }
+    .pd-overlay.is-open { opacity: 1; pointer-events: all; }
+    .pd-drawer {
+      position: fixed; top: 0; right: 0; bottom: 0; width: 480px;
+      background: var(--ivory); z-index: 201;
+      transform: translateX(100%);
+      transition: transform .4s cubic-bezier(.4,0,.2,1);
+      overflow-y: auto; display: flex; flex-direction: column;
+    }
+    .pd-drawer.is-open { transform: translateX(0); }
+    .pd-close {
+      position: sticky; top: 0; align-self: flex-end; z-index: 10;
+      background: var(--ivory); border: none; cursor: pointer;
+      padding: var(--space-4); color: var(--ink); line-height: 1;
+    }
+    .pd-img-main {
+      width: 100%; aspect-ratio: 4/5;
+      background-size: cover; background-position: center top;
+      background-color: var(--bone);
+    }
+    .pd-thumbs { display: flex; gap: 8px; padding: 12px 24px; }
+    .pd-thumb {
+      width: 64px; height: 80px; flex-shrink: 0;
+      background-size: cover; background-position: center top;
+      background-color: var(--bone); cursor: pointer;
+      border: 2px solid transparent; transition: border-color .2s;
+    }
+    .pd-thumb.is-active { border-color: var(--ink); }
+    .pd-content { padding: 4px 24px 40px; display: flex; flex-direction: column; gap: 16px; }
+    .pd-cat-label { font-size: 10px; letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; color: var(--bronze-500); }
+    .pd-name { font-family: var(--font-display); font-size: 28px; line-height: 1.1; }
+    .pd-colour { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--fg-muted); margin-top: -8px; }
+    .pd-price { font-size: 18px; font-weight: 500; color: var(--ink); margin-top: -4px; }
+    .pd-desc { font-size: 15px; line-height: 1.75; color: var(--paper-700); margin: 0; }
+    .pd-fabric-row { display: flex; flex-wrap: wrap; gap: 16px; padding: 14px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .pd-fabric-row span { font-size: 13px; color: var(--paper-700); }
+    .pd-fabric-row span strong { display: block; color: var(--ink); font-weight: 500; margin-bottom: 2px; font-size: 11px; letter-spacing: .05em; text-transform: uppercase; }
+    .pd-sizes-label { font-size: 11px; letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; color: var(--fg-muted); }
+    .pd-sizes { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pd-sizes .sz-btn {
+      padding: 10px 18px; font: 500 11px/1 var(--font-sans);
+      letter-spacing: .05em; text-transform: uppercase;
+      border: 1px solid var(--border); background: transparent;
+      cursor: pointer; transition: background .15s, border-color .15s, color .15s;
+    }
+    .pd-sizes .sz-btn:hover { border-color: var(--ink); }
+    .pd-sizes .sz-btn.is-selected { background: var(--ink); color: var(--ivory); border-color: var(--ink); }
+    @keyframes sz-shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-4px)} 75%{transform:translateX(4px)} }
+    .pd-sizes .sz-btn.needs-size { animation: sz-shake .3s ease; border-color: var(--bronze-500); }
+    .pd-add-btn {
+      width: 100%; padding: 16px; font: 500 12px/1 var(--font-sans);
+      letter-spacing: var(--tracking-button); text-transform: uppercase;
+      background: var(--ink); color: var(--ivory); border: none; cursor: pointer;
+      transition: background .2s;
+    }
+    .pd-add-btn:hover { background: var(--olive-600,#4a5240); }
+    .pd-add-btn.is-added { background: var(--olive-500,#5c6650); }
+    .pd-add-btn:disabled { background: var(--paper-300,#ccc); color: var(--paper-500,#999); cursor: default; }
+    @media (max-width: 520px) { .pd-drawer { width: 100vw; } }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="fl-header" id="site-header">
+  <div class="fl-announcement">Free UK delivery on orders over £200 · We ship worldwide</div>
+  <div class="fl-nav">
+    <div class="fl-nav-left">
+      <button class="fl-icon-btn fl-nav-burger" aria-label="Menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <a class="fl-nav-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+        <span>EN · GBP</span>
+      </a>
+    </div>
+    <a class="fl-wordmark" href="index.html" aria-label="Finelines home">Finel<em>i</em>nes</a>
+    <div class="fl-nav-right">
+      <button class="fl-icon-btn" aria-label="Search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </button>
+      <button class="fl-icon-btn" aria-label="Account">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
+      </button>
+      <button class="fl-icon-btn fl-cart-btn" aria-label="Bag">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7Z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg>
+        <span class="fl-cart-badge">0</span>
+      </button>
+    </div>
+  </div>
+  <nav class="fl-subnav">
+    <a href="#" class="fl-subnav-link">Shop</a>
+    <a href="brands.html" class="fl-subnav-link is-active">Brands</a>
+    <a href="#" class="fl-subnav-link">The edit</a>
+    <a href="#" class="fl-subnav-link">Adorned</a>
+    <a href="#" class="fl-subnav-link">Journal</a>
+    <a href="#" class="fl-subnav-link">About</a>
+    <a href="#" class="fl-subnav-link">Become a vendor</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- BRAND HERO -->
+  <div class="br-hero">
+    <div class="br-hero-img" style="background-image:url('assets/brands/afume/Side-Tail Wrap Dress.jpg')"></div>
+    <div class="br-hero-content">
+      <div>
+        <div class="eyebrow br-hero-eyebrow" style="margin-bottom:var(--space-2)">Womenswear · Lagos</div>
+        <div class="br-hero-name">AFUME</div>
+        <div class="br-hero-location" style="margin-top:8px">Lagos, Nigeria</div>
+      </div>
+      <p class="br-hero-desc">
+        AFUME creates contemporary womenswear rooted in Nigerian textile artistry. Adire-dyed kimonos, asooke patchwork tops, wrap dresses and co-ord sets — each piece fuses centuries-old craft with a silhouette built for the modern diaspora woman.
+      </p>
+      <div class="br-hero-meta">
+        <div class="br-hero-meta-item"><strong>Signature</strong>Adire · Asooke · Chiffon</div>
+        <div class="br-hero-meta-item"><strong>Focus</strong>Womenswear</div>
+        <div class="br-hero-meta-item"><strong>Ships from</strong>Lagos</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="br-filters">
+    <span class="br-filter-label">Filter</span>
+    <button class="br-filter-btn is-active" data-filter="all">All</button>
+    <button class="br-filter-btn" data-filter="dresses">Dresses</button>
+    <button class="br-filter-btn" data-filter="kimonos">Kimonos</button>
+    <button class="br-filter-btn" data-filter="tops">Tops</button>
+    <button class="br-filter-btn" data-filter="sets">Sets &amp; co-ords</button>
+    <button class="br-filter-btn" data-filter="adire">Adire</button>
+  </div>
+
+  <!-- PRODUCT COUNT -->
+  <div class="br-count" id="br-count"></div>
+
+  <!-- PRODUCT GRID -->
+  <div class="br-grid" id="br-grid"></div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="fl-footer">
+  <div class="fl-footer-inner">
+    <div class="fl-footer-grid">
+      <div class="fl-footer-brand">
+        <div class="fl-footer-wordmark">Finel<em>i</em>nes</div>
+        <p>The global home of premium African fashion. Made for the diaspora — for work, dinners, church, travel, everyday life.</p>
+        <div class="fl-footer-social">
+          <a href="https://instagram.com/finelines_uk" target="_blank" rel="noopener">Instagram</a>
+          <a href="mailto:info@shopfinelines.com">info@shopfinelines.com</a>
+        </div>
+      </div>
+      <div>
+        <h5>Shop</h5>
+        <ul><li><a href="#">New arrivals</a></li><li><a href="#">The edit</a></li><li><a href="#">Her</a></li><li><a href="#">Him</a></li><li><a href="#">Adorned</a></li></ul>
+      </div>
+      <div>
+        <h5>House</h5>
+        <ul><li><a href="#">About</a></li><li><a href="brands.html">Brand directory</a></li><li><a href="#">Journal</a></li><li><a href="#">Become a vendor</a></li></ul>
+      </div>
+      <div>
+        <h5>Help</h5>
+        <ul><li><a href="#">FAQ</a></li><li><a href="#">Shipping &amp; delivery</a></li><li><a href="#">Returns</a></li><li><a href="#">Contact</a></li></ul>
+      </div>
+      <div>
+        <h5>Account</h5>
+        <ul><li><a href="#">Sign in</a></li><li><a href="#">Create account</a></li><li><a href="#">Wishlist</a></li><li><a href="#">Track order</a></li></ul>
+      </div>
+    </div>
+    <div class="fl-footer-legal">
+      <span>© 2026 Finelines International. Curated in London &amp; Lagos.</span>
+      <span><a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Cookies</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- PRODUCT DRAWER -->
+<div class="pd-overlay" id="pd-overlay"></div>
+<aside class="pd-drawer" id="pd-drawer" aria-label="Product detail" role="dialog">
+  <button class="pd-close" id="pd-close" aria-label="Close">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </button>
+  <div class="pd-img-main" id="pd-img-main"></div>
+  <div class="pd-thumbs" id="pd-thumbs"></div>
+  <div class="pd-content">
+    <div class="pd-cat-label" id="pd-cat-label"></div>
+    <div class="pd-name" id="pd-name"></div>
+    <div class="pd-colour" id="pd-colour"></div>
+    <div class="pd-price" id="pd-price"></div>
+    <p class="pd-desc" id="pd-desc"></p>
+    <div class="pd-fabric-row" id="pd-fabric-row"></div>
+    <div class="pd-sizes-label">Select size</div>
+    <div class="pd-sizes" id="pd-sizes"></div>
+    <button class="pd-add-btn" id="pd-add-btn">Add to bag</button>
+  </div>
+</aside>
+
+<script>
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('is-condensed', window.scrollY > 80);
+  }, { passive: true });
+
+  const BASE = 'assets/brands/afume/';
+
+  const CAT_LABELS = {
+    dresses: 'Dress',
+    kimonos: 'Kimono',
+    tops:    'Top',
+    sets:    'Set · Co-ord',
+    adire:   'Adire',
+  };
+
+  // ── Cart ─────────────────────────────────────────────────
+  function getCart() { try { return JSON.parse(localStorage.getItem('fl_cart') || '[]'); } catch { return []; } }
+  function saveCart(c) { localStorage.setItem('fl_cart', JSON.stringify(c)); }
+  function updateBadge() {
+    const n = getCart().reduce((s, i) => s + (i.qty || 1), 0);
+    document.querySelectorAll('.fl-cart-badge').forEach(el => el.textContent = n);
+  }
+  function addToCart(p, size) {
+    const cart = getCart();
+    const key = p.name + '|' + size;
+    const existing = cart.find(i => i.key === key);
+    if (existing) { existing.qty = (existing.qty || 1) + 1; }
+    else { cart.push({ key, name: p.name, colour: p.colour, price: p.price, size, qty: 1, img: p.img }); }
+    saveCart(cart);
+    updateBadge();
+  }
+  updateBadge();
+
+  // ── Products ─────────────────────────────────────────────
+  const products = [
+    // DRESSES
+    { name: 'Side-Tail Wrap Dress',               cat: 'dresses', colour: 'Ivory',            price: '£95',
+      sizes: ['18'],
+      img: 'Side-Tail Wrap Dress.jpg',       alt: 'Side-Tail Wrap Dress(1).jpg',
+      desc: 'A contemporary wrap silhouette with an elongated side tail that creates a draped, asymmetric hemline. Fluid and feminine, it moves beautifully and flatters a range of body shapes.',
+      fabric: 'Woven fashion fabric', fit: 'Wrap silhouette, asymmetric hem' },
+
+    { name: 'Wrap Dress',                          cat: 'dresses', colour: 'Floral print',     price: '£90',
+      sizes: ['8'],
+      img: 'Wrap dress.jpg',                 alt: 'Wrap dress(1).jpg',
+      desc: 'The wrap dress is a wardrobe constant — and this one earns its keep. A clean, adjustable silhouette that ties at the waist, suited to real bodies and real occasions.',
+      fabric: 'Woven fashion fabric', fit: 'Wrap silhouette, adjustable at waist' },
+
+    { name: 'Wrap Dress — Green Belt',             cat: 'dresses', colour: 'Green belt',       price: '£90',
+      sizes: ['10'],
+      img: 'Wrap Dress with green belt.jpg', alt: 'Wrap dress green belt.jpg',
+      desc: 'The same beautifully proportioned wrap silhouette, styled with a contrasting green sash belt that defines the waist and adds a punch of colour.',
+      fabric: 'Woven fashion fabric', fit: 'Wrap silhouette, adjustable at waist' },
+
+    { name: 'Wrap Dress — Green & White Belt',     cat: 'dresses', colour: 'Green & white',    price: '£90',
+      sizes: ['12'],
+      img: 'Wrap dress green_white belt.jpg',
+      desc: 'Versatile wrap styling paired with a two-tone green and white belt — a considered detail that adds pattern interest without overpowering the dress.',
+      fabric: 'Woven fashion fabric', fit: 'Wrap silhouette, adjustable at waist' },
+
+    { name: 'Wrap Dress — Mustard Belt',           cat: 'dresses', colour: 'Mustard belt',     price: '£90',
+      sizes: ['10'],
+      img: 'Wrap dress mustard belt.jpg',
+      desc: 'The wrap dress elevated with a warm mustard belt — a pop of yellow that works year-round. Mix and match the belt with other pieces in your wardrobe.',
+      fabric: 'Woven fashion fabric', fit: 'Wrap silhouette, adjustable at waist' },
+
+    { name: 'Silk Neck Rope Dress',                cat: 'dresses', colour: 'Adire navy',       price: '£135',
+      sizes: ['10'],
+      img: 'Silk Neck Rope Dress.jpg',       alt: 'Silk Neck rope dress(1).jpg',
+      desc: 'Luxurious silk adire fabric gathered into a halter-style dress with a signature rope-tied neck closure. The hand-dyed silk catches the light differently at every angle — a dress that rewards movement.',
+      fabric: 'Silk adire', fit: 'Halter silhouette, relaxed through body' },
+
+    { name: 'Batik Gold-Button Midi Dress',        cat: 'dresses', colour: 'Multi batik',      price: '£65',
+      sizes: [],
+      img: 'Batik Gold-Button Midi Dress.jpg',
+      desc: 'A midi dress in rich batik-patterned fabric, structured with gold-tone button detailing down the front. The button closure references tailored heritage dressing while the batik roots it firmly in West African textile culture.',
+      fabric: 'Batik-dyed cotton', fit: 'Relaxed midi, fitted at shoulder' },
+
+    { name: 'Red Dress',                           cat: 'dresses', colour: 'Red',              price: 'POA',
+      sizes: ['8'],
+      img: 'Red Dress.jpg',
+      desc: 'A bold statement in red. The clean silhouette lets the colour command the room — powerful, joyful, unapologetic.',
+      fabric: 'Fashion fabric', fit: 'Relaxed, structured' },
+
+    { name: 'Blue Chiffon Shift Dress',            cat: 'dresses', colour: 'Powder blue',      price: '£65',
+      sizes: ['10'],
+      img: 'Blue Chiffon shift dress.jpg',   alt: 'Blue Chiffon shift dress alt.jpg',
+      desc: 'A fluid shift dress in powder-blue chiffon with a subtle side slit for easy movement. Light and breathable — perfect for warm-weather dressing or layered over a slip for evening.',
+      fabric: 'Chiffon', fit: 'Shift silhouette, relaxed through body' },
+
+    { name: 'Long Sleeve Shift Dress',             cat: 'dresses', colour: 'Printed',          price: '£90',
+      sizes: [],
+      img: 'Long Sleeve Shift dress .jpg',   alt: 'Long sleeve shift dress (1).jpg',
+      desc: 'A long-sleeved shift dress with a clean, minimal silhouette. The understated cut lets the fabric and colour do the talking — effortless from desk to dinner.',
+      fabric: 'Woven fabric', fit: 'Straight shift, relaxed fit' },
+
+    { name: 'Sleeveless French Lace Dress',        cat: 'dresses', colour: 'Mixed',            price: '£85',
+      sizes: ['18'],
+      img: 'Sleeveless french lace combination dress.jpg',
+      desc: 'A sleeveless dress that brings together fine French lace and a contrasting fabric base — European material meeting African design sensibility. Refined and occasion-ready.',
+      fabric: 'French lace & complementary base fabric', fit: 'Fitted through bodice, skims the body' },
+
+    { name: 'Green Shirt Dress',                   cat: 'dresses', colour: 'Sage green',       price: '£65',
+      sizes: ['14'],
+      img: 'Green Shirt Dress.jpg',
+      desc: 'Sage green cotton meets a hand-woven asooke patch pocket in this quietly confident shirt dress. Clean lines and cultural detail in equal measure.',
+      fabric: 'Cotton with hand-woven asooke pocket', fit: 'Shirt dress, straight cut' },
+
+    { name: 'Brown Shirt Dress',                   cat: 'dresses', colour: 'Warm brown',       price: '£65',
+      sizes: ['12'],
+      img: 'Brown Shirt Dress.jpg',
+      desc: 'A refined shirt dress in tonal brown, distinguished by a single asooke-cloth patch pocket — a small detail that speaks to craft and intention. Button-through front, worn belted or loose.',
+      fabric: 'Cotton with hand-woven asooke pocket', fit: 'Shirt dress, straight cut' },
+
+    { name: 'Purple Shirt Dress',                  cat: 'dresses', colour: 'Deep purple',      price: '£65',
+      sizes: ['14'],
+      img: 'Purple Shirt Dress.jpg',
+      desc: 'Deep purple cotton with a hand-woven asooke patch pocket — a pocket that is a quiet declaration of heritage. Shirt dress silhouette works with sandals by day and heels by night.',
+      fabric: 'Cotton with hand-woven asooke pocket', fit: 'Shirt dress, straight cut' },
+
+    { name: 'Patchwork Asooke Tunic — Blue',       cat: 'dresses', colour: 'Indigo & multi',   price: 'POA',
+      sizes: ['18'],
+      img: 'Patchwork asooke woven tunic dress (Blue).jpg', alt: 'Patchwork asooke woven tunic dress (Blue)(1).jpg',
+      desc: 'A tunic dress built from panels of hand-woven aso-oke in blue tones and complementary colours, stitched in a deliberate patchwork composition. A tribute to the Yoruba weaver — each panel different, the whole unified by craft.',
+      fabric: 'Hand-woven aso-oke, patchwork construction', fit: 'Relaxed tunic silhouette, midi length' },
+
+    { name: 'Patchwork Asooke Tunic — Tan',        cat: 'dresses', colour: 'Tan & multi',      price: 'POA',
+      sizes: ['16'],
+      img: 'Patchwork asooke woven tunic dress (Tan).jpg',
+      desc: 'Earthy tan aso-oke panels assembled into a wearable composition — warm, grounded tones that speak to the landscape of West Africa. No two pieces are identical.',
+      fabric: 'Hand-woven aso-oke, patchwork construction', fit: 'Relaxed tunic silhouette, midi length' },
+
+    // KIMONOS
+    { name: 'Striped Yellow Asooke Kimono',        cat: 'kimonos', colour: 'Yellow & multi',   price: '£125',
+      sizes: ['One size'],
+      img: 'Striped Yellow Panel asooke kimono with tassels.jpg', alt: 'Striped Yellow kimono with tassels.jpg',
+      desc: 'Sunshine-yellow striped aso-oke with a bold asooke panel at the front and tassel detailing at the hem and cuffs. A celebration garment in the truest sense — worn to be seen, made to last.',
+      fabric: 'Hand-woven aso-oke with tassel trim', fit: 'One size, open front, floor-grazing' },
+
+    { name: 'Striped Tan Kimono with Tassels',     cat: 'kimonos', colour: 'Tan stripe',       price: '£125',
+      sizes: ['One size'],
+      img: 'Striped Tan kimono with tassels.jpg',
+      desc: 'Tan striped aso-oke — one of West Africa\'s most storied woven fabrics — shaped into a flowing kimono with knotted tassel ends. The tassels catch and swing with movement, adding playful energy to a deeply cultural textile.',
+      fabric: 'Hand-woven aso-oke with tassel trim', fit: 'One size, open front' },
+
+    { name: 'Striped Tan Asooke Panel Kimono',     cat: 'kimonos', colour: 'Tan & contrast',   price: '£125',
+      sizes: ['One size'],
+      img: 'Striped Tan Asooke Panel kimono with tassels.jpg',
+      desc: 'A tan striped aso-oke kimono with a distinct woven panel that introduces a contrasting colour and weave pattern. Tassels at the hem complete this considered, cultural piece.',
+      fabric: 'Hand-woven aso-oke with tassel trim', fit: 'One size, open front' },
+
+    { name: 'Tan Kimono with Tassels',             cat: 'kimonos', colour: 'Warm tan',         price: '£125',
+      sizes: ['One size'],
+      img: 'Tan kimono with tassels.jpg',
+      desc: 'A clean, unfussy aso-oke kimono in a warm tan ground. The tassels bring movement and a quietly festive energy — the simplest version of this silhouette, and perhaps the most wearable.',
+      fabric: 'Hand-woven aso-oke with tassel trim', fit: 'One size, open front' },
+
+    { name: 'Tan Panel Kimono with Tassels',       cat: 'kimonos', colour: 'Tan & multi panel', price: '£125',
+      sizes: ['One size'],
+      img: 'Tan panel kimono with tassels.jpg', alt: 'Tan panel kimono with tassels(1).jpg',
+      desc: 'The tan aso-oke ground is interrupted by a woven panel in contrasting colour — a design decision that rewards close looking. Tassel trim adds the finishing movement.',
+      fabric: 'Hand-woven aso-oke with tassel trim', fit: 'One size, open front' },
+
+    { name: 'Chiffon Kimono — Orange Panel',       cat: 'kimonos', colour: 'Ivory & orange',   price: '£100',
+      sizes: ['One size'],
+      img: 'Chiffon kimono with contrast orange panel.jpg', alt: 'Chiffon kimono with contrast orange pattern panel.jpg',
+      desc: 'A chiffon kimono energised by a warm orange contrast panel. The translucent outer layers soften the boldness of the panel detail, creating a look that is vibrant without being overwhelming.',
+      fabric: 'Chiffon with woven orange contrast panel', fit: 'One size, open front' },
+
+    { name: 'Chiffon Kimono — Purple Panel',       cat: 'kimonos', colour: 'Ivory & purple',   price: '£100',
+      sizes: ['One size'],
+      img: 'Chiffon kimono with contrast purple panel.jpg', alt: 'Chiffon kimono with contrast purple panel(1).jpg',
+      desc: 'Rich purple contrast panels anchor this sheer chiffon kimono, creating depth and drama. A layer that transforms any base outfit into something considered and complete.',
+      fabric: 'Chiffon with woven purple contrast panel', fit: 'One size, open front' },
+
+    { name: 'Chiffon Kimono — Green Panel',        cat: 'kimonos', colour: 'Ivory & green',    price: '£100',
+      sizes: ['One size'],
+      img: 'Chiffon Kimono with contrast green panel.jpg',
+      desc: 'Ivory chiffon opens to reveal a rich green contrast panel — the detail that elevates this kimono from cover-up to statement layer. Wear over a slip dress or tailored trousers.',
+      fabric: 'Chiffon with woven green contrast panel', fit: 'One size, open front' },
+
+    { name: 'Chiffon Kimono with Panel',           cat: 'kimonos', colour: 'Ivory & contrast', price: '£100',
+      sizes: ['One size'],
+      img: 'Chiffon kimono with panel.jpg',
+      desc: 'A flowing chiffon kimono with a contrast panel detail at front and hem. Lightweight and billowing, it layers beautifully over a dress or trouser look — a piece you will reach for every season.',
+      fabric: 'Chiffon with woven contrast panel', fit: 'One size, open front' },
+
+    // TOPS
+    { name: 'Patchwork Woven Blue Top',            cat: 'tops',    colour: 'Blue & alaari',    price: '£80',
+      sizes: [],
+      img: 'Patchwork woven blue top with alaari sleeves.jpg', alt: 'Patchwork woven blue top with alaari sleeves(1).jpg',
+      desc: 'A statement top composed of hand-woven blue aso-oke panels, finished with striking alaari (red-orange) sleeves — a bold meeting of two of Nigeria\'s most celebrated textile traditions. Each piece is unique, shaped by the weaver\'s hand.',
+      fabric: 'Hand-woven aso-oke & alaari', fit: 'Relaxed, boxy cut' },
+
+    { name: 'Patchwork Woven Tan Top',             cat: 'tops',    colour: 'Tan & alaari',     price: '£80',
+      sizes: [],
+      img: 'Patchwork woven tan top with alaari sleeves.jpg',
+      desc: 'Earthy tan woven panels with alaari accent sleeves — a grounded, warm palette that carries the weight of tradition lightly. Works beautifully with wide-leg trousers or a simple skirt.',
+      fabric: 'Hand-woven aso-oke & alaari', fit: 'Relaxed, boxy cut' },
+
+    { name: 'Patchwork Woven Red Top',             cat: 'tops',    colour: 'Red & blue',       price: '£80',
+      sizes: [],
+      img: 'Patchwork woven red top with blue sleeves.jpg',
+      desc: 'Warm red woven aso-oke panels joined with cool contrasting blue sleeves — a head-turning top where the interplay of colour tells a story of craft passed through generations.',
+      fabric: 'Hand-woven aso-oke', fit: 'Relaxed, boxy cut' },
+
+    // ADIRE
+    { name: 'Adire Blouse',                        cat: 'adire',   colour: 'Indigo',           price: '£35',
+      sizes: ['16'],
+      img: 'Adire Blouse.jpg',
+      desc: 'A breezy relaxed-fit blouse in hand-dyed adire cotton — Nigeria\'s oldest resist-dye tradition. Bold indigo patterning meets a relaxed Western silhouette, as at home at the office as it is at a weekend market.',
+      fabric: 'Hand-dyed adire cotton', fit: 'Relaxed, boxy cut' },
+
+    { name: 'Classic Adire Shirt',                 cat: 'adire',   colour: 'Indigo',           price: '£50',
+      sizes: ['10', '12'],
+      img: 'Classic Adire Shirt.jpg size 10, 12.jpg',
+      desc: 'A crisp button-down reimagined in bold adire cloth. The tailored collar and cuff detail give a structured silhouette while the hand-dyed pattern ensures no two shirts are exactly alike.',
+      fabric: 'Hand-dyed adire cotton', fit: 'Tailored shirt fit' },
+
+    { name: 'Patchwork Adire Dress',               cat: 'adire',   colour: 'Indigo multi',     price: '£135',
+      sizes: ['16'],
+      img: 'Patchwork Adire dress.jpg', alt: 'Patchwork Adire dress-alt.jpg',
+      desc: 'A showpiece dress assembled from hand-dyed adire panels in varying indigo depths — each patch unique, the whole greater than its parts. Wearable art rooted in the Yoruba adire tradition of Southern Nigeria.',
+      fabric: 'Hand-dyed adire cotton, patchwork construction', fit: 'Relaxed, flowing' },
+
+    // SETS
+    { name: 'Jumpsuit',                            cat: 'sets',    colour: 'Printed',          price: '£100',
+      sizes: ['S', 'L'],
+      img: 'Jumpsuit.jpg', alt: 'Jumpsuit(1).jpg',
+      desc: 'A structured jumpsuit in bold printed fabric — one piece that achieves everything. The wide leg and fitted waist create a flattering silhouette that works from day events to evening engagements.',
+      fabric: 'Printed fashion fabric', fit: 'Wide-leg jumpsuit, fitted at waist' },
+
+    { name: 'Purple Two Piece Set',                cat: 'sets',    colour: 'Purple',           price: '£90',
+      sizes: ['14'],
+      img: 'Purple Two Piece set.jpg',
+      desc: 'A tonal purple two-piece — top and wide-leg trouser — in a rich, confident hue. Worn together as a matched set or separated for versatile styling. One purchase, multiple outfits.',
+      fabric: 'Fashion fabric', fit: 'Co-ord, relaxed fit' },
+
+    { name: 'Orange Two-Piece Co-ord Set',         cat: 'sets',    colour: 'Burnt orange',     price: '£120',
+      sizes: ['10'],
+      img: 'Orange Two-Piece Co-ord Set.jpg',
+      desc: 'A vibrant burnt-orange co-ord set with a contemporary cut. Worn together for maximum impact, or separated to extend your wardrobe — a practical investment in a bold palette.',
+      fabric: 'Woven fashion fabric', fit: 'Co-ord, relaxed silhouette' },
+
+    { name: 'Blue Fringe Two-Piece Set',           cat: 'sets',    colour: 'Blue',             price: '£125',
+      sizes: ['14'],
+      img: 'Blue Fringe Two-Piece Set.jpg',
+      desc: 'A coordinated two-piece in blue with statement fringe trim — full-length fringe that creates movement with every step. Bold, considered, and built for occasions that deserve attention.',
+      fabric: 'Fashion fabric with fringe trim', fit: 'Co-ord, relaxed fit' },
+  ];
+
+  // ── Render ───────────────────────────────────────────────
+  const grid = document.getElementById('br-grid');
+  const countEl = document.getElementById('br-count');
+  const filterBtns = document.querySelectorAll('.br-filter-btn');
+
+  function encode(s) { return s.replace(/'/g, '%27'); }
+
+  function render(filter) {
+    const visible = filter === 'all' ? products : products.filter(p => p.cat === filter);
+    countEl.textContent = visible.length + ' piece' + (visible.length !== 1 ? 's' : '');
+
+    grid.innerHTML = visible.map(p => {
+      const realIdx = products.indexOf(p);
+      const main = BASE + encode(p.img);
+      const altLayer = p.alt
+        ? `<div class="br-card-img-alt" style="background-image:url('${BASE + encode(p.alt)}')"></div>`
+        : '';
+      return `
+        <div class="br-card" data-idx="${realIdx}" style="cursor:pointer">
+          <div class="br-card-img-wrap">
+            <div class="br-card-img" style="background-image:url('${main}')"></div>
+            ${altLayer}
+          </div>
+          <div class="br-card-body">
+            <div class="br-card-cat">${CAT_LABELS[p.cat]}</div>
+            <div class="br-card-name">${p.name}</div>
+            <div class="br-card-price" style="font-size:14px;font-weight:500;margin-top:4px">${p.price}</div>
+          </div>
+        </div>`;
+    }).join('');
+
+    grid.querySelectorAll('.br-card').forEach(card => {
+      card.addEventListener('click', () => openDrawer(parseInt(card.dataset.idx)));
+    });
+  }
+
+  // ── Drawer ───────────────────────────────────────────────
+  const overlay  = document.getElementById('pd-overlay');
+  const drawer   = document.getElementById('pd-drawer');
+  const imgMain  = document.getElementById('pd-img-main');
+  const thumbsEl = document.getElementById('pd-thumbs');
+
+  function openDrawer(idx) {
+    const p = products[idx];
+    const images = [p.img, p.alt].filter(Boolean);
+
+    imgMain.style.backgroundImage = `url('${BASE + encode(images[0])}')`;
+    thumbsEl.innerHTML = images.map((img, i) => `
+      <div class="pd-thumb${i === 0 ? ' is-active' : ''}" data-img="${BASE + encode(img)}"
+           style="background-image:url('${BASE + encode(img)}')"></div>
+    `).join('');
+    thumbsEl.querySelectorAll('.pd-thumb').forEach(t => {
+      t.addEventListener('click', () => {
+        thumbsEl.querySelectorAll('.pd-thumb').forEach(x => x.classList.remove('is-active'));
+        t.classList.add('is-active');
+        imgMain.style.backgroundImage = `url('${t.dataset.img}')`;
+      });
+    });
+    thumbsEl.style.display = images.length > 1 ? 'flex' : 'none';
+
+    document.getElementById('pd-cat-label').textContent = CAT_LABELS[p.cat];
+    document.getElementById('pd-name').textContent  = p.name;
+    document.getElementById('pd-colour').textContent = p.colour;
+    document.getElementById('pd-price').textContent  = p.price;
+    document.getElementById('pd-desc').textContent   = p.desc || '';
+
+    const fabricParts = [];
+    if (p.fabric) fabricParts.push(`<span><strong>Material</strong>${p.fabric}</span>`);
+    if (p.fit)    fabricParts.push(`<span><strong>Fit</strong>${p.fit}</span>`);
+    document.getElementById('pd-fabric-row').innerHTML = fabricParts.join('');
+
+    const sizesEl = document.getElementById('pd-sizes');
+    const sizesLabel = drawer.querySelector('.pd-sizes-label');
+    if (p.sizes.length) {
+      sizesLabel.style.display = '';
+      sizesEl.style.display = '';
+      sizesEl.innerHTML = p.sizes.map(s => `<button class="sz-btn" data-size="${s}">${s}</button>`).join('');
+      sizesEl.querySelectorAll('.sz-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          sizesEl.querySelectorAll('.sz-btn').forEach(b => b.classList.remove('is-selected'));
+          btn.classList.add('is-selected');
+        });
+      });
+      if (p.sizes.length === 1) sizesEl.querySelector('.sz-btn').classList.add('is-selected');
+    } else {
+      sizesLabel.style.display = 'none';
+      sizesEl.style.display = 'none';
+      sizesEl.innerHTML = '';
+    }
+
+    const addBtn = document.getElementById('pd-add-btn');
+    if (p.price === 'POA') {
+      addBtn.textContent = 'Enquire';
+      addBtn.disabled = false;
+      addBtn.onclick = () => window.location.href = 'mailto:info@shopfinelines.com?subject=Enquiry: ' + encodeURIComponent(p.name);
+    } else {
+      addBtn.textContent = 'Add to bag';
+      addBtn.disabled = false;
+      addBtn.onclick = () => {
+        const sel = sizesEl.querySelector('.sz-btn.is-selected');
+        if (p.sizes.length && !sel) {
+          sizesEl.querySelectorAll('.sz-btn').forEach(b => {
+            b.classList.add('needs-size');
+            b.addEventListener('animationend', () => b.classList.remove('needs-size'), { once: true });
+          });
+          return;
+        }
+        addToCart(p, sel ? sel.dataset.size : 'One size');
+        addBtn.textContent = 'Added ✓';
+        addBtn.classList.add('is-added');
+        setTimeout(() => { addBtn.textContent = 'Add to bag'; addBtn.classList.remove('is-added'); }, 1800);
+      };
+    }
+
+    overlay.classList.add('is-open');
+    drawer.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDrawer() {
+    overlay.classList.remove('is-open');
+    drawer.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('pd-close').addEventListener('click', closeDrawer);
+  overlay.addEventListener('click', closeDrawer);
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      render(btn.dataset.filter);
+    });
+  });
+
+  render('all');
+</script>
+
+</body>
+</html>

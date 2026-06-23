@@ -1,0 +1,726 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NACK — Brand — Finelines</title>
+  <meta name="description" content="Lagos-born fashion brand drawing from Nigeria's cultural landscape — from the royal courts of Ife to Fela Kuti. Native wear, womenswear and unisex streetwear.">
+  <link rel="icon" type="image/svg+xml" href="assets/logo-monogram-finelines.svg">
+  <link rel="stylesheet" href="colors_and_type.css">
+  <link rel="stylesheet" href="homepage.css">
+  <style>
+    /* ── Brand hero ── */
+    .br-hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 560px;
+      max-width: var(--page-max);
+      margin: 0 auto;
+    }
+    .br-hero-img {
+      background-size: cover;
+      background-position: center top;
+      min-height: 480px;
+    }
+    .br-hero-content {
+      background: var(--ink);
+      padding: var(--space-9) var(--space-8);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: var(--space-5);
+    }
+    .br-hero-eyebrow { color: var(--bronze-500); }
+    .br-hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 5vw, 80px);
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+      color: var(--ivory);
+    }
+    .br-hero-location {
+      font-size: 11px;
+      letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase;
+      color: rgba(247,244,239,0.5);
+    }
+    .br-hero-desc {
+      font-size: 16px;
+      line-height: 1.7;
+      color: rgba(247,244,239,0.75);
+      max-width: 44ch;
+    }
+    .br-hero-meta {
+      display: flex;
+      gap: var(--space-6);
+      padding-top: var(--space-4);
+      border-top: 1px solid rgba(247,244,239,0.15);
+      flex-wrap: wrap;
+    }
+    .br-hero-meta-item { font-size: 12px; color: rgba(247,244,239,0.5); }
+    .br-hero-meta-item strong { display: block; font-weight: 500; color: var(--ivory); font-size: 13px; margin-bottom: 2px; }
+
+    /* ── Filters ── */
+    .br-filters {
+      max-width: var(--page-max);
+      margin: 0 auto;
+      padding: var(--space-6) var(--gutter);
+      display: flex;
+      gap: var(--space-3);
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .br-filter-label {
+      font-size: 11px;
+      letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      margin-right: var(--space-2);
+    }
+    .br-filter-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--ink);
+      font: 500 11px/1 var(--font-sans);
+      letter-spacing: var(--tracking-button);
+      text-transform: uppercase;
+      padding: 9px 16px;
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+    }
+    .br-filter-btn:hover,
+    .br-filter-btn.is-active {
+      background: var(--ink);
+      color: var(--ivory);
+      border-color: var(--ink);
+    }
+
+    /* ── Product grid ── */
+    .br-count {
+      max-width: var(--page-max);
+      margin: 0 auto;
+      padding: var(--space-5) var(--gutter) var(--space-4);
+      font-size: 11px;
+      letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase;
+      color: var(--fg-muted);
+    }
+    .br-grid {
+      max-width: var(--page-max);
+      margin: 0 auto;
+      padding: 0 var(--gutter) var(--space-10);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-6) var(--space-5);
+    }
+    .br-card {
+      display: flex;
+      flex-direction: column;
+    }
+    .br-card-img-wrap {
+      aspect-ratio: 4/5;
+      position: relative;
+      overflow: hidden;
+      background: var(--bone);
+    }
+    .br-card-img,
+    .br-card-img-alt {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center top;
+      transition: opacity var(--dur-image) var(--ease);
+    }
+    .br-card-img-alt { opacity: 0; }
+    .br-card:hover .br-card-img-alt { opacity: 1; }
+    .br-card-body { padding-top: var(--space-3); }
+    .br-card-section {
+      font-size: 10px;
+      letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase;
+      color: var(--bronze-500);
+      margin-bottom: 5px;
+    }
+    .br-card-name {
+      font-family: var(--font-display);
+      font-size: 20px;
+      line-height: 1.15;
+      color: var(--ink);
+    }
+    .br-card-colour {
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      margin-top: 4px;
+    }
+    .br-card-price {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink);
+      margin-top: 6px;
+    }
+    .br-card-sizes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: var(--space-3);
+    }
+    .sz-btn {
+      background: transparent;
+      border: 1px solid var(--border-strong);
+      color: var(--ink);
+      font: 500 10px/1 var(--font-sans);
+      letter-spacing: 0.08em;
+      padding: 6px 10px;
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+    }
+    .sz-btn:hover { background: var(--ivory-deep); }
+    .sz-btn.is-selected { background: var(--ink); color: var(--ivory); border-color: var(--ink); }
+    @keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-4px)} 40%{transform:translateX(4px)} 60%{transform:translateX(-3px)} 80%{transform:translateX(3px)} }
+    .sz-btn.needs-size { animation: shake 0.35s ease; border-color: var(--bronze-500); }
+    .br-add-btn {
+      margin-top: var(--space-3);
+      width: 100%;
+      background: var(--ink);
+      color: var(--ivory);
+      border: 0;
+      font: 500 11px/1 var(--font-sans);
+      letter-spacing: var(--tracking-button);
+      text-transform: uppercase;
+      padding: 14px 0;
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      transition: background var(--dur-fast) var(--ease);
+    }
+    .br-add-btn:hover { background: var(--olive-600); }
+    .br-add-btn.is-added { background: var(--olive-500); }
+    .br-add-btn:disabled { background: var(--paper-300); color: var(--paper-500); cursor: default; }
+    .br-cs-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(28,28,26,0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .br-cs-label {
+      font: 500 10px/1 var(--font-sans);
+      letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase;
+      color: var(--ivory);
+      border: 1px solid rgba(247,244,239,0.6);
+      padding: 10px 18px;
+    }
+
+    /* ── Product drawer ── */
+    .pd-overlay {
+      position: fixed; inset: 0;
+      background: rgba(28,28,26,0.4);
+      opacity: 0; pointer-events: none;
+      transition: opacity var(--dur-base) var(--ease);
+      z-index: 200;
+    }
+    .pd-overlay.is-open { opacity: 1; pointer-events: all; }
+    .pd-drawer {
+      position: fixed; top: 0; right: 0; bottom: 0;
+      width: 480px; max-width: 100vw;
+      background: var(--ivory);
+      transform: translateX(100%);
+      transition: transform var(--dur-slow) var(--ease);
+      z-index: 201;
+      display: flex; flex-direction: column;
+      overflow-y: auto;
+    }
+    .pd-drawer.is-open { transform: translateX(0); }
+    .pd-close {
+      position: absolute; top: 16px; right: 16px;
+      background: transparent; border: 0; cursor: pointer;
+      color: var(--ink); padding: 8px; z-index: 2;
+    }
+    .pd-images { flex-shrink: 0; }
+    .pd-img-main {
+      width: 100%; aspect-ratio: 4/5;
+      background-size: cover; background-position: center top;
+      background-color: var(--bone);
+      transition: background-image var(--dur-slow) var(--ease);
+    }
+    .pd-thumbs {
+      display: flex; gap: 6px; padding: 10px 20px;
+      background: var(--ivory-deep);
+    }
+    .pd-thumb {
+      width: 56px; height: 70px; flex-shrink: 0;
+      background-size: cover; background-position: center top;
+      background-color: var(--bone);
+      cursor: pointer; border: 2px solid transparent;
+      transition: border-color var(--dur-fast) var(--ease);
+    }
+    .pd-thumb.is-active { border-color: var(--ink); }
+    .pd-content { padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-4); }
+    .pd-section-label {
+      font-size: 10px; letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase; color: var(--bronze-500);
+    }
+    .pd-name { font-family: var(--font-display); font-size: 32px; line-height: 1.05; color: var(--ink); }
+    .pd-colour { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg-muted); margin-top: -8px; }
+    .pd-price { font-size: 18px; font-weight: 500; color: var(--ink); }
+    .pd-desc { font-size: 14px; line-height: 1.7; color: var(--paper-700); border-top: 1px solid var(--border); padding-top: var(--space-4); max-width: 100%; }
+    .pd-fabric-row {
+      font-size: 12px; color: var(--fg-muted);
+      display: flex; gap: var(--space-4); flex-wrap: wrap;
+    }
+    .pd-fabric-row span strong { display: block; color: var(--ink); font-weight: 500; margin-bottom: 2px; }
+    .pd-sizes-label { font-size: 11px; letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; color: var(--fg-muted); }
+    .pd-sizes { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pd-sizes .sz-btn { padding: 10px 16px; font-size: 11px; }
+    .pd-add-btn {
+      width: 100%; background: var(--ink); color: var(--ivory); border: 0;
+      font: 500 12px/1 var(--font-sans); letter-spacing: var(--tracking-button);
+      text-transform: uppercase; padding: 18px 0; cursor: pointer;
+      border-radius: var(--radius-sm); margin-top: var(--space-2);
+      transition: background var(--dur-fast) var(--ease);
+    }
+    .pd-add-btn:hover { background: var(--olive-600); }
+    .pd-add-btn.is-added { background: var(--olive-500); }
+    .pd-add-btn:disabled { background: var(--paper-300); color: var(--paper-500); cursor: default; }
+    @media (max-width: 520px) { .pd-drawer { width: 100vw; } }
+
+    /* ── Responsive ── */
+    @media (max-width: 1200px) {
+      .br-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 900px) {
+      .br-hero { grid-template-columns: 1fr; }
+      .br-hero-img { min-height: 380px; }
+      .br-hero-content { padding: var(--space-7) var(--space-6); }
+      .br-grid { grid-template-columns: repeat(2, 1fr); padding: 0 var(--gutter-sm) var(--space-9); }
+      .br-filters { padding: var(--space-5) var(--gutter-sm); }
+      .br-count { padding: var(--space-5) var(--gutter-sm) var(--space-3); }
+    }
+    @media (max-width: 560px) {
+      .br-grid { gap: var(--space-4) var(--space-3); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="fl-header" id="site-header">
+  <div class="fl-announcement">Free UK delivery on orders over £200 · We ship worldwide</div>
+  <div class="fl-nav">
+    <div class="fl-nav-left">
+      <button class="fl-icon-btn fl-nav-burger" aria-label="Menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <a class="fl-nav-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+        <span>EN · GBP</span>
+      </a>
+    </div>
+    <a class="fl-wordmark" href="index.html" aria-label="Finelines home">Finel<em>i</em>nes</a>
+    <div class="fl-nav-right">
+      <button class="fl-icon-btn" aria-label="Search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </button>
+      <button class="fl-icon-btn" aria-label="Account">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
+      </button>
+      <button class="fl-icon-btn fl-cart-btn" aria-label="Bag">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7Z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg>
+        <span class="fl-cart-badge">0</span>
+      </button>
+    </div>
+  </div>
+  <nav class="fl-subnav">
+    <a href="#" class="fl-subnav-link">Shop</a>
+    <a href="brands.html" class="fl-subnav-link is-active">Brands</a>
+    <a href="#" class="fl-subnav-link">The edit</a>
+    <a href="#" class="fl-subnav-link">Adorned</a>
+    <a href="#" class="fl-subnav-link">Journal</a>
+    <a href="#" class="fl-subnav-link">About</a>
+    <a href="#" class="fl-subnav-link">Become a vendor</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- BRAND HERO -->
+  <div class="br-hero">
+    <div class="br-hero-img" style="background-image:url('assets/brands/nack/her/STRIPE GOWN (IFE)(2).webp')"></div>
+    <div class="br-hero-content">
+      <div>
+        <div class="eyebrow br-hero-eyebrow" style="margin-bottom:var(--space-2)">Her · Him · Unisex · Lagos</div>
+        <div class="br-hero-name">NACK</div>
+        <div class="br-hero-location" style="margin-top:8px">Lagos, Nigeria</div>
+      </div>
+      <p class="br-hero-desc">
+        NACK draws from the depth of Nigerian culture — the royal courts of Ife Kingdom, the spirit of Fela Kuti, the legacy of Festac '77. Native occasion wear, contemporary womenswear and unisex streetwear united by cultural pride and precise craft.
+      </p>
+      <div class="br-hero-meta">
+        <div class="br-hero-meta-item"><strong>Signature</strong>Cultural Streetwear · Native</div>
+        <div class="br-hero-meta-item"><strong>Focus</strong>Her · Him · Unisex</div>
+        <div class="br-hero-meta-item"><strong>Ships from</strong>Lagos</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="br-filters">
+    <span class="br-filter-label">Filter</span>
+    <button class="br-filter-btn is-active" data-filter="all">All</button>
+    <button class="br-filter-btn" data-filter="her">Her</button>
+    <button class="br-filter-btn" data-filter="him">Him</button>
+    <button class="br-filter-btn" data-filter="unisex">Unisex</button>
+  </div>
+
+  <!-- PRODUCT COUNT -->
+  <div class="br-count" id="br-count"></div>
+
+  <!-- PRODUCT GRID -->
+  <div class="br-grid" id="br-grid"></div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="fl-footer">
+  <div class="fl-footer-inner">
+    <div class="fl-footer-grid">
+      <div class="fl-footer-brand">
+        <div class="fl-footer-wordmark">Finel<em>i</em>nes</div>
+        <p>The global home of premium African fashion. Made for the diaspora — for work, dinners, church, travel, everyday life.</p>
+        <div class="fl-footer-social">
+          <a href="https://instagram.com/finelines_uk" target="_blank" rel="noopener">Instagram</a>
+          <a href="mailto:info@shopfinelines.com">info@shopfinelines.com</a>
+        </div>
+      </div>
+      <div>
+        <h5>Shop</h5>
+        <ul><li><a href="#">New arrivals</a></li><li><a href="#">The edit</a></li><li><a href="#">Her</a></li><li><a href="#">Him</a></li><li><a href="#">Adorned</a></li></ul>
+      </div>
+      <div>
+        <h5>House</h5>
+        <ul><li><a href="#">About</a></li><li><a href="brands.html">Brand directory</a></li><li><a href="#">Journal</a></li><li><a href="#">Become a vendor</a></li></ul>
+      </div>
+      <div>
+        <h5>Help</h5>
+        <ul><li><a href="#">FAQ</a></li><li><a href="#">Shipping &amp; delivery</a></li><li><a href="#">Returns</a></li><li><a href="#">Contact</a></li></ul>
+      </div>
+      <div>
+        <h5>Account</h5>
+        <ul><li><a href="#">Sign in</a></li><li><a href="#">Create account</a></li><li><a href="#">Wishlist</a></li><li><a href="#">Track order</a></li></ul>
+      </div>
+    </div>
+    <div class="fl-footer-legal">
+      <span>© 2026 Finelines International. Curated in London &amp; Lagos.</span>
+      <span><a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Cookies</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- PRODUCT DRAWER -->
+<div class="pd-overlay" id="pd-overlay"></div>
+<aside class="pd-drawer" id="pd-drawer" aria-label="Product detail" role="dialog">
+  <button class="pd-close" id="pd-close" aria-label="Close">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </button>
+  <div class="pd-images">
+    <div class="pd-img-main" id="pd-img-main"></div>
+    <div class="pd-thumbs" id="pd-thumbs"></div>
+  </div>
+  <div class="pd-content">
+    <div class="pd-meta">
+      <div class="pd-section-label" id="pd-section-label"></div>
+      <div class="pd-name" id="pd-name"></div>
+      <div class="pd-colour" id="pd-colour"></div>
+      <div class="pd-price" id="pd-price"></div>
+    </div>
+    <p class="pd-desc" id="pd-desc"></p>
+    <div class="pd-fabric-row" id="pd-fabric-row"></div>
+    <div class="pd-sizes-label">Select size</div>
+    <div class="pd-sizes" id="pd-sizes"></div>
+    <button class="pd-add-btn" id="pd-add-btn">Add to bag</button>
+  </div>
+</aside>
+
+<script>
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('is-condensed', window.scrollY > 80);
+  }, { passive: true });
+
+  const BASE = 'assets/brands/nack/';
+  const SECTION_LABELS = { her: 'Her', him: 'Him', unisex: 'Unisex' };
+
+  const products = [
+    // HER
+    { name: 'Ndokazi Dress',           colour: 'Beige',         price: '£64.85', sizes: ['S','XL','2XL'],           section: 'her',    img: 'her/Ndokazi Dress.webp',                            alt: 'her/Ndokazi Dress(1).webp',
+      desc: 'This dress honours the strength and grace of women who carry their heritage. A relaxed, flowing silhouette with a structured bodice crafted from breathable cotton. Nsibidi-inspired symbolic markings sweep across the flared skirt, creating movement while telling cultural stories. Halter neckline with open back, gathered skirt for volume, and functional side pockets. "Ndokazi" translates to made of the people, worn with power — a statement of belonging and cultural pride.',
+      fabric: 'Cotton', fit: 'Flowy, relaxed with structured bodice', model: '5\'11" wearing Large' },
+    { name: 'Orekelewa 2pcs',           colour: 'Blue',          price: '£72.37', sizes: ['S','M','L','XL'],              section: 'her',    img: 'her/Orekelewa 2pc.webp',                               alt: 'her/OREKELEWA 2PCS.webp',
+      desc: 'A bold denim ensemble inspired by the Yoruba word "Orekelewa," meaning exceptional beauty. This 2-piece set fuses modern streetwear with African cultural pride, featuring scattered artistic text prints throughout. Relaxed-fit cropped shirt with flap pocket details, paired with high-waist drawstring shorts. All-over graphic print in electric blue — breathable, durable, and crafted to make a statement.',
+      fabric: 'Premium blue denim', fit: 'Relaxed crop top, high-waist shorts' },
+
+    { name: 'Female Stripe Gown (Ife)', colour: 'Black & White', price: '£57.89', sizes: ['S','M','L','XL'],              section: 'her',    img: 'her/STRIPE GOWN (IFE).webp',                           alt: 'her/STRIPE GOWN (IFE)(1).webp',
+      desc: 'Drawing inspiration from the Yoruba civilisation and the ancient city of Ife, this gown features cultural embroidery motifs and delicate stripe patterns that elongate the frame and create a timeless aesthetic. A fluid silhouette with a structured bodice, front slit for enhanced movement, functional side pockets, and an adjustable tie-back detail for a cinched fit. Transitions effortlessly from daytime to evening.',
+      fabric: 'Premium stripe cotton', fit: 'Relaxed, fluid silhouette', model: '5\'11" wearing Large' },
+
+    { name: 'Festac Native Dress',      colour: 'Brown',         price: '£64.85', sizes: ['L','XL'],                      section: 'her',    img: 'her/Festac Native Dress.webp',                         alt: 'her/Festac Native Dress(2).webp',
+      desc: 'A three-quarter length Danshiki dress featuring rhinestone detailing inspired by the Queen Idia Mask, celebrating the heritage of the Benin Kingdom. Step out in style and honour African history with this stunning and unique piece. The rhinestone embellishments add elegance while making a powerful statement of African identity. Also available in Wine and Black.',
+      fabric: 'Danshiki fabric with rhinestone detailing', model: '5\'7" wearing Large' },
+
+    { name: 'Festac Native Dress',      colour: 'Wine',          price: '£64.85', sizes: ['L','XL'],  comingSoon: true,   section: 'her',    img: 'her/Festac Native Dress.webp',
+      desc: 'A three-quarter length Danshiki dress featuring rhinestone detailing inspired by the Queen Idia Mask, celebrating the heritage of the Benin Kingdom. The rhinestone embellishments add elegance while making a powerful statement of African identity. Image coming soon.',
+      fabric: 'Danshiki fabric with rhinestone detailing' },
+
+    { name: 'Festac Native Dress',      colour: 'Black',         price: '£64.85', sizes: ['L','XL'],  comingSoon: true,   section: 'her',    img: 'her/Festac Native Dress.webp',
+      desc: 'A three-quarter length Danshiki dress featuring rhinestone detailing inspired by the Queen Idia Mask, celebrating the heritage of the Benin Kingdom. The rhinestone embellishments add elegance while making a powerful statement of African identity. Image coming soon.',
+      fabric: 'Danshiki fabric with rhinestone detailing' },
+
+    { name: 'Female Karko 2pcs',        colour: 'Orange',        price: '£42.64', sizes: ['S','M','L','XL','2XL'],        section: 'her',    img: 'her/Female Karko 2pcs in Orange.webp',                 alt: 'her/Female Karko 2pcs in Orange(1).webp',
+      desc: '"She carries the legacy of the queens and warriors in her stride, grace in her posture, and the future in her eyes." A cropped top paired with a high-slit skirt, both featuring bold geometric prints rooted in African history and heritage. Designed for the contemporary woman who honours her ancestral roots while establishing her own identity.',
+      fabric: 'Towel Back Jersey (French Cross)', fit: 'Cropped top with high-slit skirt' },
+
+    // HIM
+    { name: 'Festac Native',            colour: 'Black',         price: '£64.85', sizes: ['L','XL'],                      section: 'him',    img: 'him/Festac Native in Black.webp',                      alt: 'him/Festac Native in Black(1).webp',
+      desc: 'A free-size Danshiki top honouring Queen Mother Idia\'s legacy from the Benin Empire. Rhinestone embellishments represent her iconic ivory mask, celebrating African heritage and history with every detail. A stunning homage to the legacy of Queen Mother Idia and her influential role in shaping the Benin Empire — wear it as a powerful statement of African identity. Also available in Green and Blue.',
+      fabric: 'Danshiki with rhinestone detailing', fit: 'Free size', model: '6\'1" wearing Large' },
+
+    { name: 'Festac Native',            colour: 'Green',         price: '£64.85', sizes: ['L','XL'],                      section: 'him',    img: 'him/Festac Native in Green.webp',                      alt: 'him/Festac Native in Green(1).webp',
+      desc: 'A free-size Danshiki top honouring Queen Mother Idia\'s legacy from the Benin Empire. Rhinestone embellishments represent her iconic ivory mask, celebrating African heritage and history with every detail. Also available in Black and Blue.',
+      fabric: 'Danshiki with rhinestone detailing', fit: 'Free size' },
+
+    { name: 'Festac Native',            colour: 'Blue',          price: '£64.85', sizes: ['L','XL'],                      section: 'him',    img: 'him/Festac Native in Blue.webp',                       alt: 'him/Festac Native in Blue(1).webp',
+      desc: 'A free-size Danshiki top honouring Queen Mother Idia\'s legacy from the Benin Empire. Rhinestone embellishments represent her iconic ivory mask, celebrating African heritage and history with every detail. Also available in Black and Green.',
+      fabric: 'Danshiki with rhinestone detailing', fit: 'Free size' },
+
+    { name: 'NACK Art Silk Pant',       colour: 'Beige',         price: '£52.45', sizes: ['S','M','L','XL','2XL'],        section: 'him',    img: 'him/NACK Art Silk Pant in Beige.webp',                 alt: 'him/NACK Art Silk Pant in Beige(1).webp',
+      desc: 'A contemporary trouser blending minimalism with sophistication. Features a ribbon and ring detail at the waist alongside sleek side slits — designed for versatility across occasions, transitioning seamlessly from formal events to casual wear while maintaining timeless elegance. NACK ribbon detailing and D-ring at waist. Also available in Black.',
+      fabric: 'Crepe', fit: 'Tailored slit pant' },
+
+    { name: 'NACK Art Silk Pant',       colour: 'Black',         price: '£52.45', sizes: ['S','M','L','XL','2XL'],        section: 'him',    img: 'him/NACK Art Silk Pant in Black.webp',                 alt: 'him/NACK Art Silk Pant in Black(1).webp',
+      desc: 'A contemporary trouser blending minimalism with sophistication. Features a ribbon and ring detail at the waist alongside sleek side slits — designed for versatility across occasions, transitioning seamlessly from formal events to casual wear while maintaining timeless elegance. NACK ribbon detailing and D-ring at waist. Also available in Beige.',
+      fabric: 'Crepe', fit: 'Tailored slit pant' },
+
+    { name: 'NACK Man ID 2pcs (Ife)',   colour: 'Beige',         price: '£115.63', sizes: ['M','L','XL','2XL'],           section: 'him',    img: 'him/NACK Man ID 2pcs 2.0 (Ife).webp',                  alt: 'him/NACK Man ID 2pcs 2.0 (Ife)(1).webp',
+      desc: 'This two-piece ensemble draws from the Ife Kingdom\'s artistic heritage. Minimalist styling on the front is paired with an intricate and captivating mask print on the back — the mask artwork representing the ancient bronze sculpture traditions and cultural legacy of the Ife Kingdom. A top and slit pant in crepe, designed for a relaxed, comfortable fit. A tribute to African artistic heritage.',
+      fabric: 'Crepe', fit: 'Relaxed top and slit pant' },
+
+    { name: 'Palazart Pant (Mursi)',    colour: 'Blue',          price: '£74.45', sizes: ['S','M','L','XL'],              section: 'him',    img: 'him/Palazart Pant (Mursi).webp',                       alt: 'him/Palazart Pant (Mursi)(1).webp',
+      desc: 'This denim pant draws inspiration from the Mursi tribe of Ethiopia\'s Omo Valley. A deep blue base adorned with intricate yellow patterns reflecting the tribe\'s artistic traditions and cultural heritage — appearing on both front and back as a wearable tribute to Mursi craftsmanship and individuality. The patterns symbolise the tribe\'s fearless self-expression and their distinctive artistic legacy.',
+      fabric: 'Denim', fit: 'Wide leg' },
+
+    // UNISEX
+    { name: 'Fela Sweat Top',           colour: 'Black',         price: '£65.40', sizes: ['S','M','L','XL'],              section: 'unisex', img: 'unisex/Fela Sweat Top in Black.webp',                  alt: 'unisex/Fela Sweat Top in Black(1).webp',
+      desc: 'A stylish sweatshirt honouring Afrobeat legend Fela Kuti, featuring graphics inspired by his music and cultural impact. Celebrate Fela\'s extraordinary talent while staying comfortable and fashionable. Crew neck, long sleeves, oversized fit. Also available in Rose.',
+      fabric: '75% cotton, 20% polyester, 5% elastane', model: '5\'6" wearing Small' },
+
+    { name: 'Fela Sweat Top',           colour: 'Rose',          price: '£65.40', sizes: ['S','M','L','XL'],              section: 'unisex', img: 'unisex/Fela Sweat Top in Rose.webp',                   alt: 'unisex/Fela Sweat Top in Rose(1).webp',
+      desc: 'A stylish sweatshirt honouring Afrobeat legend Fela Kuti, featuring captivating graphics inspired by his iconic music and influence. Honour Fela Kuti\'s legacy through fashion with this bold, comfortable piece. Crew neck, long sleeves, oversized fit. Also available in Black.',
+      fabric: '75% cotton, 20% polyester, 5% elastane' },
+
+    { name: 'Fela Tee',                 colour: 'White',         price: '£56.10', sizes: ['M','L','XL'],                  section: 'unisex', img: 'unisex/Fela Tee in White.webp',                        alt: 'unisex/Fela Tee in White(1).webp',
+      desc: 'A vibrant oversized T-shirt celebrating legendary musician Fela Kuti and Afrobeat culture. Featuring Afrobeat-inspired graphics as a tribute to the iconic artist\'s enduring influence on music and global culture. This is more than a tee — it\'s a statement of appreciation for African musical heritage and Kuti\'s revolutionary impact.',
+      fabric: '95% cotton, 5% elastane', fit: 'Oversized' },
+
+    { name: 'Ife Kingdom Sweat Top',    colour: 'Green',         price: '£52.11', sizes: ['S','M','L','XL','2XL'],        section: 'unisex', img: 'unisex/Ife Kingdom Sweat Top in Green.webp',           alt: 'unisex/Ife Kingdom Sweat Top in Green(1).webp',
+      desc: 'Celebrating the historical legacy of the Ife Kingdom through design. Features an embroidered bronze head on the front and a mask print with historical context on the back. Warmth and cultural appreciation in one — honour African heritage while maintaining contemporary style. A wearable tribute to the kingdom\'s grandeur and rich history.',
+      fabric: 'Cotton, polyester and elastane blend' },
+
+    { name: 'Ife Kingdom Tee 2.0',      colour: 'Black',         price: '£40.47', sizes: ['M','L','XL'],                  section: 'unisex', img: 'unisex/Ife Kingdom Tee 2.0 in Black.webp',             alt: 'unisex/Ife Kingdom Tee 2.0 in Black(1).webp',
+      desc: 'This tee pays homage to the Ife Kingdom\'s heritage through design. An intricate bronze head design at the front, and a striking mask print accompanied by a brief historical account on the back. Bridge the past and present — wear it to honour the kingdom\'s history and cultural heritage. Education and aesthetics in equal measure.',
+      fabric: 'Cotton and elastane blend' },
+
+    { name: 'LXN Nigerian Jersey',      colour: 'Green',         price: '£55.57', sizes: ['S','M','L','XL','2XL','3XL'], section: 'unisex', img: 'unisex/LXN Nigerian Jersey season 2 in Green.webp',     alt: 'unisex/LXN Nigerian Jersey season 2 in Green(1).webp',
+      desc: 'A premium Nigerian jersey designed for extraordinary Nigerians and their community everywhere. A statement of pride, unity, and confidence — featuring bold green vertical stripes and heritage-inspired symbols woven into the fabric. Relaxed fit, breathable construction, and "NIGERIA" front detailing that blends culture, identity, and modern streetwear style. Also available in White.',
+      fabric: 'Polyester — breathable, lightweight, durable', fit: 'Relaxed' },
+
+    { name: 'LXN Nigerian Jersey',      colour: 'White',         price: '£55.57', sizes: ['S','M','L','XL','2XL','3XL'], section: 'unisex', img: 'unisex/LXN Nigerian Jersey season 2 in White.webp',     alt: 'unisex/LXN Nigerian Jersey season 2 in White(1).webp',
+      desc: 'A premium Nigerian jersey designed for extraordinary Nigerians and their community everywhere. A statement of pride, unity, and confidence — featuring heritage-inspired symbols woven into the fabric. Relaxed fit, breathable construction, and "NIGERIA" front detailing that blends culture, identity, and modern streetwear style. Also available in Green.',
+      fabric: 'Polyester — breathable, lightweight, durable', fit: 'Relaxed' },
+
+    { name: 'NACK Classic Sweat Top',   colour: 'Black',         price: '£57.32', sizes: ['S','M','L','XL','2XL'],        section: 'unisex', img: 'unisex/NACK Classic Sweat Top in Black.webp',          alt: 'unisex/NACK Classic Sweat Top in Black(1).webp',
+      desc: 'Commemorating 15 years of NACK with an iconic logo at the centre and a distinctive "15" symbol in Nsibidi script on the back — honouring the ancient and profound wisdom of the African continent, representing the strength and beauty of its people. Wear this top as a proud ambassador of African culture. Also available in Green.',
+      fabric: '75% cotton, 20% polyester, 5% elastane', model: '5\'10" wearing Medium' },
+
+    { name: 'NACK Classic Sweat Top',   colour: 'Green',         price: '£57.32', sizes: ['S','M','L','XL','2XL'],        section: 'unisex', img: 'unisex/NACK Classic Sweat Top in Green.webp',          alt: 'unisex/NACK Classic Sweat Top in Green(1).webp',
+      desc: 'Commemorating 15 years of NACK with an iconic logo at the centre and a distinctive "15" symbol in Nsibidi script on the back — honouring the ancient and profound wisdom of the African continent. Crew neck, long sleeves. Also available in Black.',
+      fabric: '75% cotton, 20% polyester, 5% elastane' },
+
+    { name: 'NACK Classic Tee',         colour: 'Black',         price: '£44.00', sizes: ['S','M','L','XL','2XL'],        section: 'unisex', img: 'unisex/NACK Classic Tee in Black.webp',                alt: 'unisex/NACK Classic Tee in Black(1).webp',
+      desc: 'A commemorative shirt celebrating 15 years of NACK apparel. The brand logo at the centre alongside a "15" symbol rendered in Nsibidi — an ancient African writing system — pays tribute to the rich cultural history and heritage of Africa. 100% cotton, crew neck, short sleeves. A piece of the NACK legacy.',
+      fabric: '100% cotton', model: '5\'9" wearing Small' },
+  ];
+
+  // ── Cart ──────────────────────────────────────────────
+  let cart = JSON.parse(localStorage.getItem('fl_cart') || '[]');
+
+  function saveCart() {
+    localStorage.setItem('fl_cart', JSON.stringify(cart));
+    const total = cart.reduce((n, i) => n + i.qty, 0);
+    document.querySelectorAll('.fl-cart-badge').forEach(b => {
+      b.textContent = total;
+      b.style.display = total ? '' : 'none';
+    });
+  }
+
+  function addToCart(p, size) {
+    const key = p.name + '|' + p.colour + '|' + size;
+    const existing = cart.find(i => i.key === key);
+    if (existing) { existing.qty++; }
+    else { cart.push({ key, name: p.name, colour: p.colour, size, price: p.price, qty: 1 }); }
+    saveCart();
+  }
+
+  saveCart(); // initialise badge on load
+
+  // ── Render ─────────────────────────────────────────────
+  const grid = document.getElementById('br-grid');
+  const countEl = document.getElementById('br-count');
+  const filterBtns = document.querySelectorAll('.br-filter-btn');
+
+  function encode(s) { return s.replace(/'/g, "%27"); }
+
+  function render(filter) {
+    const visible = filter === 'all' ? products : products.filter(p => p.section === filter);
+    countEl.textContent = visible.length + ' piece' + (visible.length !== 1 ? 's' : '');
+
+    grid.innerHTML = visible.map((p) => {
+      const realIdx = products.indexOf(p);
+      const main = BASE + encode(p.img);
+      const altLayer = (!p.comingSoon && p.alt)
+        ? `<div class="br-card-img-alt" style="background-image:url('${BASE + encode(p.alt)}')"></div>`
+        : '';
+      const csOverlay = p.comingSoon
+        ? `<div class="br-cs-overlay"><div class="br-cs-label">Coming soon</div></div>`
+        : '';
+
+      return `
+        <div class="br-card" data-idx="${realIdx}" style="cursor:pointer">
+          <div class="br-card-img-wrap">
+            <div class="br-card-img" style="background-image:url('${main}')"></div>
+            ${altLayer}
+            ${csOverlay}
+          </div>
+          <div class="br-card-body">
+            <div class="br-card-section">${SECTION_LABELS[p.section]}</div>
+            <div class="br-card-name">${p.name}</div>
+            <div class="br-card-colour">${p.colour}</div>
+            <div class="br-card-price">${p.price}</div>
+          </div>
+        </div>`;
+    }).join('');
+
+    // Card click → open drawer
+    grid.querySelectorAll('.br-card').forEach(card => {
+      card.addEventListener('click', () => openDrawer(parseInt(card.dataset.idx)));
+    });
+  }
+
+  // ── Drawer ─────────────────────────────────────────────
+  const overlay  = document.getElementById('pd-overlay');
+  const drawer   = document.getElementById('pd-drawer');
+  const imgMain  = document.getElementById('pd-img-main');
+  const thumbsEl = document.getElementById('pd-thumbs');
+
+  let drawerProduct = null;
+
+  function openDrawer(idx) {
+    drawerProduct = products[idx];
+    const p = drawerProduct;
+
+    // Images
+    const images = [p.img, p.alt].filter(Boolean);
+    imgMain.style.backgroundImage = `url('${BASE + encode(images[0])}')`;
+
+    thumbsEl.innerHTML = images.map((img, i) => `
+      <div class="pd-thumb${i === 0 ? ' is-active' : ''}" data-img="${BASE + encode(img)}"
+           style="background-image:url('${BASE + encode(img)}')"></div>
+    `).join('');
+
+    thumbsEl.querySelectorAll('.pd-thumb').forEach(t => {
+      t.addEventListener('click', () => {
+        thumbsEl.querySelectorAll('.pd-thumb').forEach(x => x.classList.remove('is-active'));
+        t.classList.add('is-active');
+        imgMain.style.backgroundImage = `url('${t.dataset.img}')`;
+      });
+    });
+
+    // Text
+    document.getElementById('pd-section-label').textContent = SECTION_LABELS[p.section];
+    document.getElementById('pd-name').textContent  = p.name;
+    document.getElementById('pd-colour').textContent = p.colour;
+    document.getElementById('pd-price').textContent  = p.price;
+    document.getElementById('pd-desc').textContent   = p.desc || '';
+
+    const fabricParts = [];
+    if (p.fabric) fabricParts.push(`<span><strong>Material</strong>${p.fabric}</span>`);
+    if (p.fit)    fabricParts.push(`<span><strong>Fit</strong>${p.fit}</span>`);
+    if (p.model)  fabricParts.push(`<span><strong>Model</strong>${p.model}</span>`);
+    document.getElementById('pd-fabric-row').innerHTML = fabricParts.join('');
+
+    // Sizes
+    const sizesEl = document.getElementById('pd-sizes');
+    sizesEl.innerHTML = p.sizes.map(s => `<button class="sz-btn" data-size="${s}">${s}</button>`).join('');
+    sizesEl.querySelectorAll('.sz-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        sizesEl.querySelectorAll('.sz-btn').forEach(b => b.classList.remove('is-selected'));
+        btn.classList.add('is-selected');
+      });
+    });
+
+    // Add to bag button
+    const addBtn = document.getElementById('pd-add-btn');
+    if (p.comingSoon) {
+      addBtn.textContent = 'Coming soon';
+      addBtn.disabled = true;
+    } else {
+      addBtn.textContent = 'Add to bag';
+      addBtn.disabled = false;
+      addBtn.onclick = () => {
+        const sel = sizesEl.querySelector('.sz-btn.is-selected');
+        if (!sel) {
+          sizesEl.querySelectorAll('.sz-btn').forEach(b => {
+            b.classList.add('needs-size');
+            b.addEventListener('animationend', () => b.classList.remove('needs-size'), { once: true });
+          });
+          return;
+        }
+        addToCart(p, sel.dataset.size);
+        addBtn.textContent = 'Added ✓';
+        addBtn.classList.add('is-added');
+        setTimeout(() => { addBtn.textContent = 'Add to bag'; addBtn.classList.remove('is-added'); }, 1800);
+      };
+    }
+
+    overlay.classList.add('is-open');
+    drawer.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDrawer() {
+    overlay.classList.remove('is-open');
+    drawer.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('pd-close').addEventListener('click', closeDrawer);
+  overlay.addEventListener('click', closeDrawer);
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      render(btn.dataset.filter);
+    });
+  });
+
+  render('all');
+</script>
+
+</body>
+</html>

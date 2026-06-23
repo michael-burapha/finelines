@@ -94,15 +94,14 @@ button { font-family: inherit; }
 .fl-tile:hover .fl-tile-cta { border-color: var(--bronze-300); color: var(--bronze-200); }
 
 /* ------- ABOUT -------- */
-.fl-about { background: var(--olive-500); color: var(--ivory); padding: var(--space-10) 0; }
-.fl-about-inner { max-width: var(--content-max); margin: 0 auto; padding: 0 var(--gutter); display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-9); align-items: start; }
-.fl-about-left { display: flex; flex-direction: column; gap: var(--space-5); }
+.fl-about { background: var(--olive-700); color: var(--ivory); padding: var(--space-10) 0; }
+.fl-about-inner { max-width: var(--content-max); margin: 0 auto; padding: 0 var(--gutter); }
 .fl-about-eyebrow { color: rgba(247,244,239,0.7); }
-.fl-about-title { font-size: clamp(28px, 3vw, 44px); line-height: 1.15; color: var(--ivory); max-width: 100%; margin: 0; }
-.fl-about-title em { font-style: italic; color: var(--bronze-500); }
-.fl-about-cols { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); padding-top: var(--space-3); }
-.fl-pillar-num { font-family: var(--font-display); font-style: italic; font-size: 28px; color: var(--bronze-500); }
-.fl-pillar-h { font-family: var(--font-sans); font-size: 13px; font-weight: 500; letter-spacing: var(--tracking-nav); text-transform: uppercase; margin: 12px 0 8px; color: var(--ivory); }
+.fl-about-title { font-size: clamp(32px, 4.4vw, 60px); line-height: 1.1; color: var(--ivory); max-width: 22ch; margin-top: 18px; }
+.fl-about-title em { font-style: italic; color: var(--bronze-200); }
+.fl-about-cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-6); margin-top: var(--space-9); padding-top: var(--space-7); border-top: 1px solid rgba(247,244,239,0.18); }
+.fl-pillar-num { font-family: var(--font-display); font-style: italic; font-size: 32px; color: var(--bronze-300); }
+.fl-pillar-h { font-family: var(--font-sans); font-size: 13px; font-weight: 500; letter-spacing: var(--tracking-nav); text-transform: uppercase; margin: 14px 0 10px; color: var(--ivory); }
 .fl-about-cols p { font-size: 14px; line-height: 1.55; color: rgba(247,244,239,0.72); }
 
 /* ------- BRANDS -------- */
@@ -141,7 +140,7 @@ button { font-family: inherit; }
 .fl-newsletter-thanks span { background: var(--olive-500); color: var(--ivory); width: 22px; height: 22px; border-radius: 999px; display: grid; place-items: center; font-size: 12px; }
 
 /* ------- FOOTER -------- */
-.fl-footer { background: var(--olive-500); color: var(--ivory); padding: var(--space-9) 0 var(--space-6); }
+.fl-footer { background: var(--olive-800); color: var(--ivory); padding: var(--space-9) 0 var(--space-6); }
 .fl-footer-inner { max-width: var(--content-max); margin: 0 auto; padding: 0 var(--gutter); }
 .fl-footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: var(--space-6); }
 .fl-footer-wordmark { font-family: var(--font-display); font-size: 44px; line-height: 1; }
