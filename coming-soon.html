@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Finelines — Coming Soon</title>
+  <meta name="description" content="The global home of premium African fashion. Curated for the diaspora professional. Launching soon.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Finelines — Coming Soon">
+  <meta property="og:description" content="The global home of premium African fashion. Curated for the diaspora professional.">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ivory:      #f7f4ef;
+      --ivory-deep: #ede8df;
+      --ink:        #1c1c1a;
+      --olive:      #4d7344;
+      --olive-deep: #324a2d;
+      --bronze:     #b78741;
+      --paper-600:  #5b554a;
+      --paper-700:  #403c34;
+      --border:     rgba(28,28,26,0.12);
+      --ease:       cubic-bezier(0.2, 0.6, 0.2, 1);
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--ivory);
+      color: var(--ink);
+      font-family: 'Jost', 'Helvetica Neue', system-ui, sans-serif;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* ── Layout ── */
+    .cs-wrap {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    /* ── Top bar ── */
+    .cs-top {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 32px 0;
+    }
+
+    /* ── Logo ── */
+    .cs-logo { text-decoration: none; display: inline-block; }
+    .cs-logo img { height: clamp(100px, 14vw, 160px); width: auto; display: block; }
+
+    /* ── Main content ── */
+    .cs-main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 64px 32px;
+      text-align: center;
+    }
+
+    .cs-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--olive);
+      margin-bottom: 28px;
+    }
+
+    .cs-headline {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(36px, 6vw, 72px);
+      font-weight: 400;
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      max-width: 18ch;
+      margin-bottom: 28px;
+    }
+    .cs-headline em { font-style: italic; }
+
+    .cs-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--bronze);
+      margin: 0 auto 28px;
+    }
+
+    .cs-body {
+      font-size: clamp(15px, 1.6vw, 18px);
+      line-height: 1.65;
+      color: var(--paper-700);
+      max-width: 46ch;
+      margin-bottom: 52px;
+      font-weight: 300;
+    }
+
+    /* ── Email form ── */
+    .cs-form-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--paper-600);
+      margin-bottom: 14px;
+    }
+
+    .cs-form {
+      display: flex;
+      width: 100%;
+      max-width: 440px;
+      border: 1px solid var(--ink);
+    }
+
+    .cs-form input {
+      flex: 1;
+      border: 0;
+      background: #fff;
+      padding: 16px 20px;
+      font: 400 15px/1 'Jost', sans-serif;
+      color: var(--ink);
+      outline: 0;
+    }
+    .cs-form input::placeholder { color: #a39b8a; }
+
+    .cs-form button {
+      border: 0;
+      background: var(--ink);
+      color: var(--ivory);
+      padding: 0 28px;
+      font: 500 11px/1 'Jost', sans-serif;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 240ms var(--ease);
+    }
+    .cs-form button:hover { background: var(--olive-deep); }
+
+    .cs-thanks {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--olive-deep);
+      padding: 16px 22px;
+      border: 1px solid var(--olive);
+      background: #f1f4ee;
+      max-width: 440px;
+      width: 100%;
+    }
+    .cs-thanks .tick {
+      background: var(--olive);
+      color: var(--ivory);
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+    .cs-thanks.is-visible { display: flex; }
+
+    .cs-note {
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--paper-600);
+      letter-spacing: 0.02em;
+    }
+
+    /* ── Manifesto strip ── */
+    .cs-manifesto {
+      margin-top: 80px;
+      padding-top: 48px;
+      border-top: 1px solid var(--border);
+      max-width: 600px;
+      width: 100%;
+    }
+
+    .cs-manifesto p {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(18px, 2.4vw, 26px);
+      font-weight: 400;
+      line-height: 1.55;
+      color: var(--paper-700);
+      font-style: italic;
+    }
+
+    .cs-manifesto cite {
+      display: block;
+      margin-top: 16px;
+      font-family: 'Jost', sans-serif;
+      font-style: normal;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--bronze);
+    }
+
+    /* ── Footer ── */
+    .cs-footer {
+      padding: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .cs-footer-copy {
+      font-size: 11px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--paper-600);
+    }
+
+    .cs-footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .cs-footer-links a {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--paper-600);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 2px;
+      transition: color 160ms var(--ease), border-color 160ms var(--ease);
+    }
+    .cs-footer-links a:hover {
+      color: var(--ink);
+      border-color: var(--ink);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .cs-top { padding: 32px 24px 0; }
+      .cs-main { padding: 48px 24px; }
+      .cs-form { flex-direction: column; }
+      .cs-form input { border-bottom: 1px solid var(--border); }
+      .cs-form button { padding: 16px; }
+      .cs-footer { justify-content: center; text-align: center; }
+      .cs-footer-links { justify-content: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: 0ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cs-wrap">
+
+  <!-- Logo -->
+  <header class="cs-top">
+    <a class="cs-logo" href="#" aria-label="Finelines"><img src="assets/finelines-logo.png" alt="Finelines"></a>
+  </header>
+
+  <!-- Main -->
+  <main class="cs-main">
+    <p class="cs-eyebrow">Launching soon</p>
+
+    <h1 class="cs-headline">
+      Premium African fashion,<br>
+      <em>made for everyday.</em>
+    </h1>
+
+    <div class="cs-divider"></div>
+
+    <p class="cs-body">
+      We're putting the finishing touches on a curated platform for diaspora professionals
+      who want to dress with cultural intention — without compromise.
+      No endless scrolling. No guessing. Just beautifully considered pieces.
+    </p>
+
+    <p class="cs-form-label">Be first to know</p>
+
+    <form class="cs-form" id="cs-form" novalidate>
+      <input type="email" id="cs-email" placeholder="Your email address" aria-label="Email address" autocomplete="email">
+      <button type="submit">Notify me</button>
+    </form>
+
+    <div class="cs-thanks" id="cs-thanks">
+      <span class="tick">✓</span>
+      You're on the list. We'll write when we're ready.
+    </div>
+
+    <p class="cs-note">No noise. One letter when the doors open.</p>
+
+    <div class="cs-manifesto">
+      <p>"African fashion belongs in everyday life — in the office, at dinner,
+      on the school run, at the airport. Not only at festivals."</p>
+      <cite>Bimbola Akintoye, Founder</cite>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="cs-footer">
+    <span class="cs-footer-copy">© 2026 Finelines International</span>
+    <div class="cs-footer-links">
+      <a href="https://instagram.com/finelines_uk" target="_blank" rel="noopener">Instagram</a>
+      <a href="mailto:info@shopfinelines.com">Contact</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  const form   = document.getElementById('cs-form');
+  const thanks = document.getElementById('cs-thanks');
+  const note   = document.querySelector('.cs-note');
+  const btn    = form.querySelector('button');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('cs-email').value.trim();
+    if (!email || !email.includes('@')) return;
+
+    btn.textContent = '...';
+    btn.disabled = true;
+
+    try {
+      const res = await fetch('subscribe.php', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        form.style.display = 'none';
+        note.style.display = 'none';
+        thanks.classList.add('is-visible');
+      } else {
+        btn.textContent = 'Try again';
+        btn.disabled = false;
+        console.error(data.error);
+      }
+    } catch (err) {
+      btn.textContent = 'Try again';
+      btn.disabled = false;
+    }
+  });
+</script>
+
+</body>
+</html>
