@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your Bag — Finelines</title>
+  <meta name="description" content="Review the items in your bag before checkout.">
+  <link rel="icon" type="image/svg+xml" href="assets/logo-monogram-finelines.svg">
+  <link rel="stylesheet" href="colors_and_type.css">
+  <link rel="stylesheet" href="homepage.css">
+  <style>
+    .cart-wrap {
+      max-width: var(--page-max);
+      margin: 0 auto;
+      padding: var(--space-8) var(--gutter) var(--space-12);
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: var(--space-9);
+      align-items: start;
+    }
+
+    /* ── Page title ── */
+    .cart-heading {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 4vw, 52px);
+      line-height: 1.05;
+      margin-bottom: var(--space-6);
+    }
+    .cart-count {
+      font-size: 13px;
+      color: var(--fg-muted);
+      margin-left: 10px;
+      font-family: var(--font-sans);
+      font-weight: 400;
+    }
+
+    /* ── Line items ── */
+    .cart-items { display: flex; flex-direction: column; }
+    .cart-item {
+      display: grid;
+      grid-template-columns: 120px 1fr auto;
+      gap: var(--space-5);
+      padding: var(--space-6) 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .cart-item-img {
+      aspect-ratio: 4/5;
+      background-size: cover;
+      background-position: center top;
+      background-color: var(--bone);
+    }
+    .cart-item-body { display: flex; flex-direction: column; gap: 6px; }
+    .cart-item-brand {
+      font-size: 10px;
+      letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase;
+      color: var(--bronze-500);
+    }
+    .cart-item-name {
+      font-family: var(--font-display);
+      font-size: 20px;
+      line-height: 1.2;
+      color: var(--ink);
+    }
+    .cart-item-meta {
+      font-size: 13px;
+      color: var(--fg-muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 16px;
+    }
+    .cart-item-actions { margin-top: auto; display: flex; align-items: center; gap: var(--space-4); }
+    .qty-ctrl {
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--border);
+    }
+    .qty-btn {
+      width: 36px;
+      height: 36px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .15s;
+    }
+    .qty-btn:hover { background: var(--ivory-deep); }
+    .qty-num {
+      min-width: 36px;
+      text-align: center;
+      font: 500 14px/1 var(--font-sans);
+      color: var(--ink);
+      padding: 0 4px;
+    }
+    .remove-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 12px;
+      letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      padding: 0;
+      border-bottom: 1px solid transparent;
+      transition: color .15s, border-color .15s;
+    }
+    .remove-btn:hover { color: var(--ink); border-color: var(--ink); }
+
+    .cart-item-price-col {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+      padding-top: 4px;
+    }
+    .cart-item-unit { font-size: 13px; color: var(--fg-muted); }
+    .cart-item-subtotal { font: 500 16px/1 var(--font-sans); color: var(--ink); }
+
+    /* ── Empty state ── */
+    .cart-empty {
+      display: none;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-5);
+      padding: var(--space-9) 0;
+    }
+    .cart-empty.is-visible { display: flex; }
+    .cart-empty-msg {
+      font-family: var(--font-display);
+      font-size: 28px;
+      color: var(--ink);
+    }
+    .cart-empty-sub { font-size: 15px; color: var(--fg-muted); line-height: 1.6; }
+
+    /* ── Order summary ── */
+    .cart-summary {
+      background: var(--ivory-deep);
+      padding: var(--space-7);
+      position: sticky;
+      top: 100px;
+    }
+    .cart-summary-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      margin-bottom: var(--space-5);
+    }
+    .cart-summary-rows { display: flex; flex-direction: column; gap: 12px; }
+    .cart-summary-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      color: var(--paper-700);
+    }
+    .cart-summary-row.is-total {
+      border-top: 1px solid var(--border);
+      padding-top: var(--space-4);
+      margin-top: var(--space-2);
+      font: 500 17px/1 var(--font-sans);
+      color: var(--ink);
+    }
+    .cart-summary-note {
+      font-size: 12px;
+      color: var(--fg-muted);
+      margin-top: var(--space-3);
+      line-height: 1.5;
+    }
+    .cart-checkout-btn {
+      display: block;
+      width: 100%;
+      margin-top: var(--space-5);
+      padding: 18px;
+      background: var(--ink);
+      color: var(--ivory);
+      border: none;
+      font: 500 12px/1 var(--font-sans);
+      letter-spacing: var(--tracking-button);
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .2s;
+      text-align: center;
+      text-decoration: none;
+    }
+    .cart-checkout-btn:hover { background: var(--olive-600, #4a5240); }
+    .cart-checkout-btn:disabled { background: var(--paper-300, #ccc); cursor: default; }
+    .cart-continue {
+      display: block;
+      text-align: center;
+      margin-top: var(--space-4);
+      font-size: 12px;
+      letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 2px;
+      transition: color .15s, border-color .15s;
+    }
+    .cart-continue:hover { color: var(--ink); border-color: var(--ink); }
+
+    /* ── Promo code ── */
+    .cart-promo {
+      margin-top: var(--space-5);
+      padding-top: var(--space-5);
+      border-top: 1px solid var(--border);
+    }
+    .cart-promo-label {
+      font-size: 11px;
+      letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      margin-bottom: 10px;
+    }
+    .cart-promo-row { display: flex; gap: 8px; }
+    .cart-promo-input {
+      flex: 1;
+      border: 1px solid var(--border);
+      background: var(--ivory);
+      padding: 11px 14px;
+      font: 400 13px/1 var(--font-sans);
+      color: var(--ink);
+      outline: none;
+    }
+    .cart-promo-input:focus { border-color: var(--ink); }
+    .cart-promo-btn {
+      border: 1px solid var(--ink);
+      background: transparent;
+      padding: 0 16px;
+      font: 500 11px/1 var(--font-sans);
+      letter-spacing: var(--tracking-button);
+      text-transform: uppercase;
+      cursor: pointer;
+      color: var(--ink);
+      transition: background .15s, color .15s;
+    }
+    .cart-promo-btn:hover { background: var(--ink); color: var(--ivory); }
+
+    /* ── Responsive ── */
+    @media (max-width: 1000px) {
+      .cart-wrap { grid-template-columns: 1fr; }
+      .cart-summary { position: static; }
+    }
+    @media (max-width: 640px) {
+      .cart-wrap { padding: var(--space-6) var(--gutter-sm) var(--space-10); }
+      .cart-item { grid-template-columns: 88px 1fr; }
+      .cart-item-price-col { display: none; }
+      .cart-item-subtotal-inline {
+        display: block;
+        font: 500 14px/1 var(--font-sans);
+        color: var(--ink);
+        margin-top: 2px;
+      }
+    }
+    @media (min-width: 641px) {
+      .cart-item-subtotal-inline { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="fl-header" id="site-header">
+  <div class="fl-announcement">Free UK delivery on orders over £200 · We ship worldwide</div>
+  <div class="fl-nav">
+    <div class="fl-nav-left">
+      <button class="fl-icon-btn fl-nav-burger" aria-label="Menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <a class="fl-nav-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+        <span>EN · GBP</span>
+      </a>
+    </div>
+    <a class="fl-wordmark" href="index.html" aria-label="Finelines home">Finel<em>i</em>nes</a>
+    <div class="fl-nav-right">
+      <button class="fl-icon-btn" aria-label="Search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </button>
+      <button class="fl-icon-btn" aria-label="Account">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
+      </button>
+      <a href="cart.html" class="fl-icon-btn fl-cart-btn" aria-label="Bag" style="position:relative;display:inline-flex;align-items:center;justify-content:center">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7Z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg>
+        <span class="fl-cart-badge">0</span>
+      </a>
+    </div>
+  </div>
+  <nav class="fl-subnav">
+    <a href="#" class="fl-subnav-link">Shop</a>
+    <a href="brands.html" class="fl-subnav-link">Brands</a>
+    <a href="#" class="fl-subnav-link">The edit</a>
+    <a href="#" class="fl-subnav-link">Adorned</a>
+    <a href="#" class="fl-subnav-link">Journal</a>
+    <a href="#" class="fl-subnav-link">About</a>
+    <a href="#" class="fl-subnav-link">Become a vendor</a>
+  </nav>
+</header>
+
+<main>
+  <div class="cart-wrap">
+
+    <!-- LEFT: ITEMS -->
+    <div class="cart-left">
+      <h1 class="cart-heading">Your bag <span class="cart-count" id="cart-count"></span></h1>
+
+      <div class="cart-empty" id="cart-empty">
+        <p class="cart-empty-msg">Your bag is empty.</p>
+        <p class="cart-empty-sub">Browse our curated brand directory and add pieces you love.</p>
+        <a href="brands.html" class="fl-btn fl-btn-primary">Explore brands</a>
+      </div>
+
+      <div class="cart-items" id="cart-items"></div>
+    </div>
+
+    <!-- RIGHT: SUMMARY -->
+    <div class="cart-summary" id="cart-summary">
+      <div class="cart-summary-title">Order summary</div>
+      <div class="cart-summary-rows">
+        <div class="cart-summary-row">
+          <span>Subtotal</span>
+          <span id="summary-subtotal">£0</span>
+        </div>
+        <div class="cart-summary-row">
+          <span>Shipping</span>
+          <span id="summary-shipping">Calculated at checkout</span>
+        </div>
+        <div class="cart-summary-row is-total">
+          <span>Estimated total</span>
+          <span id="summary-total">£0</span>
+        </div>
+      </div>
+      <p class="cart-summary-note" id="summary-note">Free UK delivery on orders over £200.</p>
+      <button class="cart-checkout-btn" id="checkout-btn">Proceed to checkout</button>
+      <a href="brands.html" class="cart-continue">← Continue shopping</a>
+      <div class="cart-promo">
+        <div class="cart-promo-label">Promo code</div>
+        <div class="cart-promo-row">
+          <input class="cart-promo-input" type="text" placeholder="Enter code" id="promo-input">
+          <button class="cart-promo-btn" id="promo-btn">Apply</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="fl-footer">
+  <div class="fl-footer-inner">
+    <div class="fl-footer-grid">
+      <div class="fl-footer-brand">
+        <div class="fl-footer-wordmark">Finel<em>i</em>nes</div>
+        <p>The global home of premium African fashion. Made for the diaspora — for work, dinners, church, travel, everyday life.</p>
+        <div class="fl-footer-social">
+          <a href="https://instagram.com/finelines_uk" target="_blank" rel="noopener">Instagram</a>
+          <a href="mailto:info@shopfinelines.com">info@shopfinelines.com</a>
+        </div>
+      </div>
+      <div><h5>Shop</h5><ul><li><a href="#">New arrivals</a></li><li><a href="#">The edit</a></li><li><a href="#">Her</a></li><li><a href="#">Him</a></li><li><a href="#">Adorned</a></li></ul></div>
+      <div><h5>House</h5><ul><li><a href="#">About</a></li><li><a href="brands.html">Brand directory</a></li><li><a href="#">Journal</a></li><li><a href="#">Become a vendor</a></li></ul></div>
+      <div><h5>Help</h5><ul><li><a href="#">FAQ</a></li><li><a href="#">Shipping &amp; delivery</a></li><li><a href="#">Returns</a></li><li><a href="#">Contact</a></li></ul></div>
+      <div><h5>Account</h5><ul><li><a href="#">Sign in</a></li><li><a href="#">Create account</a></li><li><a href="#">Wishlist</a></li><li><a href="#">Track order</a></li></ul></div>
+    </div>
+    <div class="fl-footer-legal">
+      <span>© 2026 Finelines International. Curated in London &amp; Lagos.</span>
+      <span><a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Cookies</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => { header.classList.toggle('is-condensed', window.scrollY > 80); }, { passive: true });
+
+  function getCart() { try { return JSON.parse(localStorage.getItem('fl_cart') || '[]'); } catch { return []; } }
+  function saveCart(c) { localStorage.setItem('fl_cart', JSON.stringify(c)); }
+
+  function parsePrice(str) {
+    if (!str || str === 'POA') return 0;
+    return parseInt(str.replace(/[^0-9]/g, ''), 10) || 0;
+  }
+
+  function updateBadge() {
+    const n = getCart().reduce((s, i) => s + (i.qty || 1), 0);
+    document.querySelectorAll('.fl-cart-badge').forEach(el => el.textContent = n);
+  }
+
+  function brandFromImg(img) {
+    if (!img) return '';
+    if (img.includes('brands/nack'))   return 'NACK';
+    if (img.includes('brands/afume'))  return 'AFUME';
+    if (img.includes('brands/sashes')) return 'Sashes × Hides';
+    return '';
+  }
+
+  function render() {
+    const cart = getCart();
+    const countEl = document.getElementById('cart-count');
+    const itemsEl = document.getElementById('cart-items');
+    const emptyEl = document.getElementById('cart-empty');
+    const checkoutBtn = document.getElementById('checkout-btn');
+
+    const totalQty = cart.reduce((s, i) => s + (i.qty || 1), 0);
+    countEl.textContent = totalQty ? `(${totalQty} item${totalQty !== 1 ? 's' : ''})` : '';
+    updateBadge();
+
+    if (!cart.length) {
+      emptyEl.classList.add('is-visible');
+      itemsEl.innerHTML = '';
+      checkoutBtn.disabled = true;
+      updateSummary(0);
+      return;
+    }
+
+    emptyEl.classList.remove('is-visible');
+    checkoutBtn.disabled = false;
+
+    itemsEl.innerHTML = cart.map((item, idx) => {
+      const unit = parsePrice(item.price);
+      const line = unit * (item.qty || 1);
+      const imgStyle = item.img ? `background-image:url('${item.img}')` : '';
+      const brand = brandFromImg(item.img);
+      return `
+        <div class="cart-item" data-idx="${idx}">
+          <div class="cart-item-img" style="${imgStyle}"></div>
+          <div class="cart-item-body">
+            ${brand ? `<div class="cart-item-brand">${brand}</div>` : ''}
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-meta">
+              ${item.colour ? `<span>${item.colour}</span>` : ''}
+              ${item.size && item.size !== 'One size' ? `<span>Size ${item.size}</span>` : item.size === 'One size' ? `<span>One size</span>` : ''}
+              ${unit ? `<span>${item.price}</span>` : ''}
+            </div>
+            <div class="cart-item-subtotal-inline">${line ? '£' + line : ''}</div>
+            <div class="cart-item-actions">
+              <div class="qty-ctrl">
+                <button class="qty-btn" data-action="dec" data-idx="${idx}" aria-label="Decrease quantity">−</button>
+                <span class="qty-num">${item.qty || 1}</span>
+                <button class="qty-btn" data-action="inc" data-idx="${idx}" aria-label="Increase quantity">+</button>
+              </div>
+              <button class="remove-btn" data-remove="${idx}">Remove</button>
+            </div>
+          </div>
+          <div class="cart-item-price-col">
+            ${unit ? `<span class="cart-item-unit">${item.price} each</span>` : ''}
+            <span class="cart-item-subtotal">${line ? '£' + line : '—'}</span>
+          </div>
+        </div>`;
+    }).join('');
+
+    const subtotal = cart.reduce((s, i) => s + parsePrice(i.price) * (i.qty || 1), 0);
+    updateSummary(subtotal);
+
+    itemsEl.querySelectorAll('.qty-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cart2 = getCart();
+        const i = parseInt(btn.dataset.idx);
+        if (btn.dataset.action === 'inc') {
+          cart2[i].qty = (cart2[i].qty || 1) + 1;
+        } else {
+          cart2[i].qty = (cart2[i].qty || 1) - 1;
+          if (cart2[i].qty <= 0) cart2.splice(i, 1);
+        }
+        saveCart(cart2);
+        render();
+      });
+    });
+
+    itemsEl.querySelectorAll('.remove-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cart2 = getCart();
+        cart2.splice(parseInt(btn.dataset.remove), 1);
+        saveCart(cart2);
+        render();
+      });
+    });
+  }
+
+  function updateSummary(subtotal) {
+    const shippingEl = document.getElementById('summary-shipping');
+    const noteEl     = document.getElementById('summary-note');
+    const totalEl    = document.getElementById('summary-total');
+    document.getElementById('summary-subtotal').textContent = subtotal ? '£' + subtotal : '£0';
+    if (!subtotal) {
+      shippingEl.textContent = '—';
+      totalEl.textContent = '£0';
+      noteEl.textContent = 'Free UK delivery on orders over £200.';
+    } else if (subtotal >= 200) {
+      shippingEl.textContent = 'Free';
+      totalEl.textContent = '£' + subtotal;
+      noteEl.textContent = 'Your order qualifies for free UK delivery.';
+    } else {
+      shippingEl.textContent = 'Calculated at checkout';
+      totalEl.textContent = '£' + subtotal + '+';
+      noteEl.textContent = `Add £${200 - subtotal} more for free UK delivery.`;
+    }
+  }
+
+  document.getElementById('promo-btn').addEventListener('click', () => {
+    const code = document.getElementById('promo-input').value.trim().toUpperCase();
+    if (!code) return;
+    alert('Promo codes will be available at launch.');
+  });
+
+  render();
+</script>
+
+</body>
+</html>
