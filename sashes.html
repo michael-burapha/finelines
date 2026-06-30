@@ -205,7 +205,7 @@
   function addToCart(p, size) {
     const cart = getCart(); const key = p.name + '|' + size;
     const ex = cart.find(i => i.key === key);
-    if (ex) { ex.qty = (ex.qty || 1) + 1; } else { cart.push({ key, name: p.name, colour: p.colour, price: p.price, size, qty: 1, img: p.img }); }
+    if (ex) { ex.qty = (ex.qty || 1) + 1; } else { cart.push({ key, name: p.name, colour: p.colour, price: p.price, size, qty: 1, img: BASE + p.img }); }
     saveCart(cart); updateBadge();
   }
   updateBadge();

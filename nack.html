@@ -572,7 +572,7 @@
     const key = p.name + '|' + p.colour + '|' + size;
     const existing = cart.find(i => i.key === key);
     if (existing) { existing.qty++; }
-    else { cart.push({ key, name: p.name, colour: p.colour, size, price: p.price, qty: 1 }); }
+    else { cart.push({ key, name: p.name, colour: p.colour, size, price: p.price, qty: 1, img: BASE + p.img }); }
     saveCart();
   }
 

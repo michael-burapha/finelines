@@ -398,7 +398,7 @@
     const key = p.name + '|' + size;
     const existing = cart.find(i => i.key === key);
     if (existing) { existing.qty = (existing.qty || 1) + 1; }
-    else { cart.push({ key, name: p.name, colour: p.colour, price: p.price, size, qty: 1, img: p.img }); }
+    else { cart.push({ key, name: p.name, colour: p.colour, price: p.price, size, qty: 1, img: BASE + p.img }); }
     saveCart(cart);
     updateBadge();
   }
