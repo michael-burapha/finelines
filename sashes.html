@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sashes X Hides — Brand — Finelines</title>
+  <meta name="description" content="Nigerian womenswear brand specialising in ankara kaftans, asooke patchwork sets, frill skater dresses and linen co-ords.">
+  <link rel="icon" type="image/svg+xml" href="assets/logo-monogram-finelines.svg">
+  <link rel="stylesheet" href="colors_and_type.css">
+  <link rel="stylesheet" href="homepage.css">
+  <style>
+    .br-hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 560px; max-width: var(--page-max); margin: 0 auto; }
+    .br-hero-img { background-size: cover; background-position: center top; min-height: 480px; }
+    .br-hero-content { background: var(--ivory-deep); padding: var(--space-9) var(--space-8); display: flex; flex-direction: column; justify-content: center; gap: var(--space-5); }
+    .br-hero-eyebrow { color: var(--bronze-500); }
+    .br-hero-name { font-family: var(--font-display); font-size: clamp(36px, 4vw, 64px); line-height: 1.0; letter-spacing: -0.01em; }
+    .br-hero-location { font-size: 11px; letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; color: var(--fg-muted); }
+    .br-hero-desc { font-size: 16px; line-height: 1.7; color: var(--paper-700); max-width: 44ch; }
+    .br-hero-meta { display: flex; gap: var(--space-6); padding-top: var(--space-4); border-top: 1px solid var(--border); }
+    .br-hero-meta-item { font-size: 12px; color: var(--fg-muted); }
+    .br-hero-meta-item strong { display: block; font-weight: 500; color: var(--ink); font-size: 13px; margin-bottom: 2px; }
+    .br-filters { max-width: var(--page-max); margin: 0 auto; padding: var(--space-6) var(--gutter); display: flex; gap: var(--space-3); align-items: center; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+    .br-filter-label { font-size: 11px; letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; color: var(--fg-muted); margin-right: var(--space-2); }
+    .br-filter-btn { background: transparent; border: 1px solid var(--border); color: var(--ink); font: 500 11px/1 var(--font-sans); letter-spacing: var(--tracking-button); text-transform: uppercase; padding: 9px 16px; cursor: pointer; border-radius: var(--radius-sm); transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease); }
+    .br-filter-btn:hover, .br-filter-btn.is-active { background: var(--ink); color: var(--ivory); border-color: var(--ink); }
+    .br-count { max-width: var(--page-max); margin: 0 auto; padding: var(--space-5) var(--gutter) var(--space-4); font-size: 11px; letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; color: var(--fg-muted); }
+    .br-grid { max-width: var(--page-max); margin: 0 auto; padding: 0 var(--gutter) var(--space-10); display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-6) var(--space-5); }
+    .br-card { display: flex; flex-direction: column; }
+    .br-card-img-wrap { aspect-ratio: 4/5; position: relative; overflow: hidden; background: var(--bone); }
+    .br-card-img, .br-card-img-alt { position: absolute; inset: 0; background-size: cover; background-position: center top; transition: opacity var(--dur-image) var(--ease); }
+    .br-card-img-alt { opacity: 0; }
+    .br-card:hover .br-card-img-alt { opacity: 1; }
+    .br-card-body { padding-top: var(--space-3); }
+    .br-card-cat { font-size: 10px; letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; color: var(--bronze-500); margin-bottom: 5px; }
+    .br-card-name { font-family: var(--font-display); font-size: 20px; line-height: 1.15; color: var(--ink); }
+    @media (max-width: 1200px) { .br-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 900px) { .br-hero { grid-template-columns: 1fr; } .br-hero-img { min-height: 380px; } .br-hero-content { padding: var(--space-7) var(--space-6); } .br-grid { grid-template-columns: repeat(2, 1fr); padding: 0 var(--gutter-sm) var(--space-9); } .br-filters { padding: var(--space-5) var(--gutter-sm); } .br-count { padding: var(--space-5) var(--gutter-sm) var(--space-3); } }
+    @media (max-width: 560px) { .br-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-4) var(--space-3); } .br-hero-meta { flex-wrap: wrap; gap: var(--space-4); } }
+
+    /* ── Product Drawer ── */
+    .pd-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 200; opacity: 0; pointer-events: none; transition: opacity .35s var(--ease); }
+    .pd-overlay.is-open { opacity: 1; pointer-events: all; }
+    .pd-drawer { position: fixed; top: 0; right: 0; bottom: 0; width: 480px; background: var(--ivory); z-index: 201; transform: translateX(100%); transition: transform .4s cubic-bezier(.4,0,.2,1); overflow-y: auto; display: flex; flex-direction: column; }
+    .pd-drawer.is-open { transform: translateX(0); }
+    .pd-close { position: sticky; top: 0; align-self: flex-end; z-index: 10; background: var(--ivory); border: none; cursor: pointer; padding: var(--space-4); color: var(--ink); line-height: 1; }
+    .pd-img-main { width: 100%; aspect-ratio: 4/5; background-size: cover; background-position: center top; background-color: var(--bone); }
+    .pd-thumbs { display: flex; gap: 8px; padding: 12px 24px; }
+    .pd-thumb { width: 64px; height: 80px; flex-shrink: 0; background-size: cover; background-position: center top; background-color: var(--bone); cursor: pointer; border: 2px solid transparent; transition: border-color .2s; }
+    .pd-thumb.is-active { border-color: var(--ink); }
+    .pd-content { padding: 4px 24px 40px; display: flex; flex-direction: column; gap: 16px; }
+    .pd-cat-label { font-size: 10px; letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; color: var(--bronze-500); }
+    .pd-name { font-family: var(--font-display); font-size: 28px; line-height: 1.1; }
+    .pd-colour { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--fg-muted); margin-top: -8px; }
+    .pd-price { font-size: 18px; font-weight: 500; color: var(--ink); margin-top: -4px; }
+    .pd-desc { font-size: 15px; line-height: 1.75; color: var(--paper-700); margin: 0; }
+    .pd-fabric-row { display: flex; flex-wrap: wrap; gap: 16px; padding: 14px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .pd-fabric-row span { font-size: 13px; color: var(--paper-700); }
+    .pd-fabric-row span strong { display: block; color: var(--ink); font-weight: 500; margin-bottom: 2px; font-size: 11px; letter-spacing: .05em; text-transform: uppercase; }
+    .pd-sizes-label { font-size: 11px; letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; color: var(--fg-muted); }
+    .pd-sizes { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pd-sizes .sz-btn { padding: 10px 18px; font: 500 11px/1 var(--font-sans); letter-spacing: .05em; text-transform: uppercase; border: 1px solid var(--border); background: transparent; cursor: pointer; transition: background .15s, border-color .15s, color .15s; }
+    .pd-sizes .sz-btn:hover { border-color: var(--ink); }
+    .pd-sizes .sz-btn.is-selected { background: var(--ink); color: var(--ivory); border-color: var(--ink); }
+    @keyframes sz-shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-4px)} 75%{transform:translateX(4px)} }
+    .pd-sizes .sz-btn.needs-size { animation: sz-shake .3s ease; border-color: var(--bronze-500); }
+    .pd-add-btn { width: 100%; padding: 16px; font: 500 12px/1 var(--font-sans); letter-spacing: var(--tracking-button); text-transform: uppercase; background: var(--ink); color: var(--ivory); border: none; cursor: pointer; transition: background .2s; }
+    .pd-add-btn:hover { background: var(--olive-600,#4a5240); }
+    .pd-add-btn.is-added { background: var(--olive-500,#5c6650); }
+    .pd-add-btn:disabled { background: var(--paper-300,#ccc); color: var(--paper-500,#999); cursor: default; }
+    @media (max-width: 520px) { .pd-drawer { width: 100vw; } }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="fl-header" id="site-header">
+  <div class="fl-announcement">Free UK delivery on orders over £200 · We ship worldwide</div>
+  <div class="fl-nav">
+    <div class="fl-nav-left">
+      <button class="fl-icon-btn fl-nav-burger" aria-label="Menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <a class="fl-nav-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+        <span>EN · GBP</span>
+      </a>
+    </div>
+    <a class="fl-wordmark" href="index.html" aria-label="Finelines home">Finel<em>i</em>nes</a>
+    <div class="fl-nav-right">
+      <button class="fl-icon-btn" aria-label="Search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </button>
+      <button class="fl-icon-btn" aria-label="Account">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
+      </button>
+      <button class="fl-icon-btn fl-cart-btn" aria-label="Bag">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7Z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg>
+        <span class="fl-cart-badge">0</span>
+      </button>
+    </div>
+  </div>
+  <nav class="fl-subnav">
+    <a href="#" class="fl-subnav-link">Shop</a>
+    <a href="brands.html" class="fl-subnav-link is-active">Brands</a>
+    <a href="#" class="fl-subnav-link">The edit</a>
+    <a href="#" class="fl-subnav-link">Adorned</a>
+    <a href="#" class="fl-subnav-link">Journal</a>
+    <a href="#" class="fl-subnav-link">About</a>
+    <a href="#" class="fl-subnav-link">Become a vendor</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- BRAND HERO -->
+  <div class="br-hero">
+    <div class="br-hero-img" style="background-image:url('assets/brands/sashes/RED FRILL DETAIL SKATER DRESS Size 12,14,16,18.jpg')"></div>
+    <div class="br-hero-content">
+      <div>
+        <div class="eyebrow br-hero-eyebrow" style="margin-bottom:var(--space-2)">Womenswear · Lagos</div>
+        <div class="br-hero-name">Sashes × Hides</div>
+        <div class="br-hero-location" style="margin-top:8px">Lagos, Nigeria</div>
+      </div>
+      <p class="br-hero-desc">
+        Sashes × Hides brings together the richness of Nigerian textile tradition — ankara, asooke, guipure — with contemporary silhouettes built for the modern woman. From elegant kaftans with hand-woven asooke patches to bold frill skater dresses and crisp linen co-ords, every piece is designed to be worn with intention.
+      </p>
+      <div class="br-hero-meta">
+        <div class="br-hero-meta-item"><strong>Signature</strong>Ankara · Asooke · Guipure</div>
+        <div class="br-hero-meta-item"><strong>Focus</strong>Womenswear</div>
+        <div class="br-hero-meta-item"><strong>Ships from</strong>Lagos</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="br-filters">
+    <span class="br-filter-label">Filter</span>
+    <button class="br-filter-btn is-active" data-filter="all">All</button>
+    <button class="br-filter-btn" data-filter="kaftans">Kaftans</button>
+    <button class="br-filter-btn" data-filter="dresses">Dresses</button>
+    <button class="br-filter-btn" data-filter="sets">Sets &amp; tunics</button>
+    <button class="br-filter-btn" data-filter="bottoms">Bottoms</button>
+  </div>
+
+  <div class="br-count" id="br-count"></div>
+  <div class="br-grid" id="br-grid"></div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="fl-footer">
+  <div class="fl-footer-inner">
+    <div class="fl-footer-grid">
+      <div class="fl-footer-brand">
+        <div class="fl-footer-wordmark">Finel<em>i</em>nes</div>
+        <p>The global home of premium African fashion. Made for the diaspora — for work, dinners, church, travel, everyday life.</p>
+        <div class="fl-footer-social">
+          <a href="https://instagram.com/finelines_uk" target="_blank" rel="noopener">Instagram</a>
+          <a href="mailto:info@shopfinelines.com">info@shopfinelines.com</a>
+        </div>
+      </div>
+      <div><h5>Shop</h5><ul><li><a href="#">New arrivals</a></li><li><a href="#">The edit</a></li><li><a href="#">Her</a></li><li><a href="#">Him</a></li><li><a href="#">Adorned</a></li></ul></div>
+      <div><h5>House</h5><ul><li><a href="#">About</a></li><li><a href="brands.html">Brand directory</a></li><li><a href="#">Journal</a></li><li><a href="#">Become a vendor</a></li></ul></div>
+      <div><h5>Help</h5><ul><li><a href="#">FAQ</a></li><li><a href="#">Shipping &amp; delivery</a></li><li><a href="#">Returns</a></li><li><a href="#">Contact</a></li></ul></div>
+      <div><h5>Account</h5><ul><li><a href="#">Sign in</a></li><li><a href="#">Create account</a></li><li><a href="#">Wishlist</a></li><li><a href="#">Track order</a></li></ul></div>
+    </div>
+    <div class="fl-footer-legal">
+      <span>© 2026 Finelines International. Curated in London &amp; Lagos.</span>
+      <span><a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Cookies</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- PRODUCT DRAWER -->
+<div class="pd-overlay" id="pd-overlay"></div>
+<aside class="pd-drawer" id="pd-drawer" aria-label="Product detail" role="dialog">
+  <button class="pd-close" id="pd-close" aria-label="Close">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </button>
+  <div class="pd-img-main" id="pd-img-main"></div>
+  <div class="pd-thumbs" id="pd-thumbs"></div>
+  <div class="pd-content">
+    <div class="pd-cat-label" id="pd-cat-label"></div>
+    <div class="pd-name" id="pd-name"></div>
+    <div class="pd-colour" id="pd-colour"></div>
+    <div class="pd-price" id="pd-price"></div>
+    <p class="pd-desc" id="pd-desc"></p>
+    <div class="pd-fabric-row" id="pd-fabric-row"></div>
+    <div class="pd-sizes-label">Select size</div>
+    <div class="pd-sizes" id="pd-sizes"></div>
+    <button class="pd-add-btn" id="pd-add-btn">Add to bag</button>
+  </div>
+</aside>
+
+<script>
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => { header.classList.toggle('is-condensed', window.scrollY > 80); }, { passive: true });
+
+  const BASE = 'assets/brands/sashes/';
+  const CAT_LABELS = { kaftans: 'Kaftan', dresses: 'Dress', sets: 'Set · Tunic', bottoms: 'Bottom' };
+
+  function getCart() { try { return JSON.parse(localStorage.getItem('fl_cart') || '[]'); } catch { return []; } }
+  function saveCart(c) { localStorage.setItem('fl_cart', JSON.stringify(c)); }
+  function updateBadge() { const n = getCart().reduce((s, i) => s + (i.qty || 1), 0); document.querySelectorAll('.fl-cart-badge').forEach(el => el.textContent = n); }
+  function addToCart(p, size) {
+    const cart = getCart(); const key = p.name + '|' + size;
+    const ex = cart.find(i => i.key === key);
+    if (ex) { ex.qty = (ex.qty || 1) + 1; } else { cart.push({ key, name: p.name, colour: p.colour, price: p.price, size, qty: 1, img: p.img }); }
+    saveCart(cart); updateBadge();
+  }
+  updateBadge();
+
+  const products = [
+    // KAFTANS
+    { name: 'Black Asooke Patch Kaftan',           cat: 'kaftans', colour: 'Black',           price: '£48',  sizes: [],
+      img: 'Black ASOOKE PATCH KAFTAN 3pcs.jpg',
+      desc: 'A flowing three-piece ankara kaftan with hand-woven asooke patch detailing at the neckline and hem. The asooke panels lift this everyday silhouette into something ceremonial.',
+      fabric: 'Ankara & hand-woven asooke', fit: 'Relaxed, floor-length' },
+
+    { name: 'Navy Asooke Patch Kaftan',            cat: 'kaftans', colour: 'Navy',             price: '£48',  sizes: [],
+      img: 'NAVY ASOOKE PATCH KAFTAN 3pcs.jpg',
+      desc: 'Deep navy ankara with striking asooke patch accents — a three-piece kaftan set that moves between daytime elegance and evening drama with ease.',
+      fabric: 'Ankara & hand-woven asooke', fit: 'Relaxed, floor-length' },
+
+    { name: 'Olive Asooke Patch Kaftan',           cat: 'kaftans', colour: 'Olive',            price: '£48',  sizes: [],
+      img: 'OLIVE ASOOKE PATCH ANKARA CAFTAN 3PCS.jpg',
+      desc: 'Earthy olive ankara with woven asooke panel details — a grounded, sophisticated palette for the woman who dresses with intention.',
+      fabric: 'Ankara & hand-woven asooke', fit: 'Relaxed, floor-length' },
+
+    { name: 'Nude Asooke Patch Kaftan',            cat: 'kaftans', colour: 'Nude',             price: '£48',  sizes: [],
+      img: 'NUDE ASOOKE PATCH KAFTAN 3pcs.jpg',
+      desc: 'Soft nude ankara with warm asooke patch trim — versatile enough for work events, celebrations, and everything in between.',
+      fabric: 'Ankara & hand-woven asooke', fit: 'Relaxed, floor-length' },
+
+    { name: 'Navy & Pink Asooke Patch Kaftan',     cat: 'kaftans', colour: 'Navy & pink',      price: '£48',  sizes: [],
+      img: 'NAVY PINK ASOOKE PATCH KAFTAN 3pcs.jpg',
+      desc: 'A bold pairing of navy ankara with rose-toned asooke patches — the contrast creates a graphic, joyful energy without sacrificing elegance.',
+      fabric: 'Ankara & hand-woven asooke', fit: 'Relaxed, floor-length' },
+
+    { name: 'Mustard & Wine Asooke Patch Kaftan',  cat: 'kaftans', colour: 'Mustard & wine',   price: '£48',  sizes: [],
+      img: 'MUSTARD WINE ASOOKE PATCH KAFTAN 3pcs.jpg',
+      desc: 'Warm mustard ankara offset by deep wine asooke panels — a rich, autumnal palette that commands attention in any room.',
+      fabric: 'Ankara & hand-woven asooke', fit: 'Relaxed, floor-length' },
+
+    { name: 'Yellow Stripe Asooke Patch Kaftan',   cat: 'kaftans', colour: 'Yellow',           price: '£48',  sizes: [],
+      img: 'YELLOW STRIPE ASOOKE PATCH ANKARA CAFTAN 3pcs.jpg',
+      desc: 'Sunshine yellow striped ankara with asooke patch detail — a three-piece kaftan set that celebrates colour and craft in equal measure.',
+      fabric: 'Ankara & hand-woven asooke', fit: 'Relaxed, floor-length' },
+
+    { name: 'Purple Asooke Patch Kaftan',          cat: 'kaftans', colour: 'Purple',           price: '£48',  sizes: [],
+      img: 'PURPLE ASOOKE PATCH ANKARA CAFTAN 3PCS.jpg',
+      desc: 'Regal purple ankara with complementary asooke woven patches — a three-piece kaftan that dresses up effortlessly for aso ebi, weddings, and celebrations.',
+      fabric: 'Ankara & hand-woven asooke', fit: 'Relaxed, floor-length' },
+
+    { name: 'Black Dotted Oversized Kaftan',       cat: 'kaftans', colour: 'Black',            price: '£52',  sizes: ['One size'],
+      img: 'Black Dotted Oversize Sleeve size 14, 16.jpg',
+      desc: 'An oversized statement kaftan in black with a bold dotted print and dramatic sleeves. The generous silhouette is effortlessly wearable — throw it on and it works.',
+      fabric: 'Printed fashion fabric', fit: 'Oversized, one size' },
+
+    { name: 'Navy Guipure Box Insert Kaftan',      cat: 'kaftans', colour: 'Navy',             price: '£52',  sizes: [],
+      img: 'NAVY GUIPURE BOX INSERT CAFTAN x2pcs.jpg',
+      desc: 'A sophisticated navy kaftan with guipure lace panel inserts at the chest — intricate lace detailing adds texture and luxury to a clean, flowing silhouette.',
+      fabric: 'Fashion fabric with guipure lace', fit: 'Relaxed, floor-length' },
+
+    { name: 'Green Guipure Box Insert Kaftan',     cat: 'kaftans', colour: 'Green',            price: '£52',  sizes: [],
+      img: 'GREEN GUIPURE BOX INSERT CAFTAN x2pcs.jpg',
+      desc: 'Rich green with a guipure lace box insert panel — a kaftan that brings together West African tradition with the fine craft of lace.',
+      fabric: 'Fashion fabric with guipure lace', fit: 'Relaxed, floor-length' },
+
+    { name: 'Red Guipure Box Insert Kaftan',       cat: 'kaftans', colour: 'Red',              price: '£52',  sizes: [],
+      img: 'RED GUIPURE BOX INSERT CAFTAN.jpg',
+      desc: 'Bold red with a delicate guipure lace panel insert — a striking contrast between colour and craft. An occasion piece built for celebration.',
+      fabric: 'Fashion fabric with guipure lace', fit: 'Relaxed, floor-length' },
+
+    { name: 'Denim & Green Tinco Kaftan',          cat: 'kaftans', colour: 'Denim & green',    price: '£70',  sizes: [],
+      img: 'Denim Green Tinko Kaftan 2pcs.jpeg',
+      desc: 'A two-piece denim kaftan with tinco (tie-and-dye) green accent detailing — an unexpected fusion of casual denim and traditional African dyeing technique.',
+      fabric: 'Denim with tinco-dyed panels', fit: 'Relaxed, two-piece' },
+
+    { name: 'Denim & Purple Tinco Kaftan',         cat: 'kaftans', colour: 'Denim & purple',   price: '£70',  sizes: [],
+      img: 'Denim Purple Tinko Kaftan 2pcs.jpeg',
+      desc: 'Denim meets deep purple tinco detailing in this two-piece kaftan — a playful, contemporary take on the kaftan silhouette rooted in West African craft tradition.',
+      fabric: 'Denim with tinco-dyed panels', fit: 'Relaxed, two-piece' },
+
+    { name: 'Red Brocade Velvet Neckline Kaftan',  cat: 'kaftans', colour: 'Red',              price: '£75',  sizes: ['14', '16'],
+      img: 'Red Brocade With Red velvet neckline 14,16.jpg',
+      desc: 'Red brocade fabric with a plush velvet neckline trim — two luxury textiles combined into one statement kaftan. Occasion dressing at its finest.',
+      fabric: 'Brocade with velvet trim', fit: 'Tailored kaftan, fitted through shoulder' },
+
+    // DRESSES
+    { name: 'Red Peplum Skater Dress',             cat: 'dresses', colour: 'Red',              price: '£60',  sizes: [],
+      img: 'RED IRREGULAR SHAWL PEPLUM SKATER DRESS.jpg', alt: 'RED IRREGULAR SHAWL PEPLUM SKATER DRESS(1).jpg',
+      desc: 'A head-turning red skater dress with an irregular shawl peplum overlay — the asymmetric peplum adds volume and drama to a fitted skater base.',
+      fabric: 'Fashion fabric with chiffon overlay', fit: 'Fitted bodice, skater skirt' },
+
+    { name: 'Orange Peplum Skater Dress',          cat: 'dresses', colour: 'Orange',           price: '£60',  sizes: [],
+      img: 'PEPLUM SKATER DRESS 285061 (1).jpg',
+      desc: 'A vibrant orange skater dress with an irregular shawl peplum overlay — bold colour and playful silhouette make this an instant conversation piece.',
+      fabric: 'Fashion fabric with chiffon overlay', fit: 'Fitted bodice, skater skirt' },
+
+    { name: 'Blue Batik Scarf Detail Dress',       cat: 'dresses', colour: 'Blue multi',       price: '£65',  sizes: ['12', '14'],
+      img: 'BLUE MIXED COLOR BATIK SCARF DETAIL DRESS size 12,14,.jpg',
+      desc: 'A mixed-colour batik dress with a built-in scarf detail — the hand-dyed batik fabric creates a rich, layered colour story, and the scarf adds a flowing finishing touch.',
+      fabric: 'Batik-dyed fabric', fit: 'Relaxed, midi length' },
+
+    { name: 'Orange Twist Strap Doll Dress',       cat: 'dresses', colour: 'Orange',           price: '£66',  sizes: [],
+      img: 'ORANGE TWIST STRAP DOLL DRESS.jpeg',
+      desc: 'A playful orange doll dress with twisted strap detailing at the neckline. The flared skirt and cinched waist create a flattering, feminine silhouette.',
+      fabric: 'Fashion fabric', fit: 'Fitted bodice, flared skirt' },
+
+    { name: 'Yellow Twist Strap Doll Dress',       cat: 'dresses', colour: 'Yellow',           price: '£66',  sizes: ['12', '14', '16', '18'],
+      img: 'YELLOW TWIST STRAP DOLL DRESS 12,14,16,18.jpeg',
+      desc: 'Sunshine yellow in a doll dress silhouette with a signature twist strap neckline. Joyful and feminine — made to wear to celebrations without overthinking.',
+      fabric: 'Fashion fabric', fit: 'Fitted bodice, flared skirt' },
+
+    { name: 'Blue Twist Strap Doll Dress',         cat: 'dresses', colour: 'Blue',             price: '£66',  sizes: ['10', '12', '14'],
+      img: 'Blue TwistStrap Doll dress sizes 10,12,14.jpeg',
+      desc: 'A cool blue doll dress with the signature twist strap neckline detail. Effortless and versatile — dressed up with heels or paired with trainers for a daytime look.',
+      fabric: 'Fashion fabric', fit: 'Fitted bodice, flared skirt' },
+
+    { name: 'Mustard Frill Skater Dress',          cat: 'dresses', colour: 'Mustard',          price: '£70',  sizes: ['10', '14', '16'],
+      img: 'MUSTARD FRILL DETAIL SKATER DRESS Size 10,14,16.jpg',
+      desc: 'A rich mustard skater dress with layered frill detailing — the frills add movement and dimension to a classic silhouette that flatters a wide range of body shapes.',
+      fabric: 'Fashion fabric', fit: 'Fitted bodice, skater skirt with frills' },
+
+    { name: 'White Frill Skater Dress',            cat: 'dresses', colour: 'White',            price: '£70',  sizes: ['10', '12', '14'],
+      img: 'WHITE FRILL DETAIL SKATER DRESS 10,12,14.jpg',
+      desc: 'Clean white with layered frill skater detailing — a crisp, feminine piece that works for summer parties, garden events, and daytime occasions.',
+      fabric: 'Fashion fabric', fit: 'Fitted bodice, skater skirt with frills' },
+
+    { name: 'Red Frill Skater Dress',              cat: 'dresses', colour: 'Red',              price: '£70',  sizes: ['12', '14', '16', '18'],
+      img: 'RED FRILL DETAIL SKATER DRESS Size 12,14,16,18.jpg',
+      desc: 'Bold red with layered frill detailing — a dress that does not ask permission. The frill skater silhouette adds volume at the hem for a dramatic, confident look.',
+      fabric: 'Fashion fabric', fit: 'Fitted bodice, skater skirt with frills' },
+
+    { name: 'Green Frill Skater Dress',            cat: 'dresses', colour: 'Green',            price: '£70',  sizes: ['12', '14', '16'],
+      img: 'GREEN FRILL DETAIL SKATER DRESS   size 12,14,16.jpg',
+      desc: 'Fresh green with layered frill skater detailing — a vibrant, feminine dress that packs visual interest without effort.',
+      fabric: 'Fashion fabric', fit: 'Fitted bodice, skater skirt with frills' },
+
+    // SETS & TUNICS
+    { name: 'White Linen Lasercut Shorts Set',     cat: 'sets',    colour: 'White',            price: '£49',  sizes: ['10', '12', '14'],
+      img: 'White LINEN WITH SQUARE LAZERCUT SUMMER SHORTS SUIT SET  size 10,12,14.jpg',
+      desc: 'A crisp white linen shorts suit with square lasercut panel detailing — the cut creates a bold geometric pattern that elevates an otherwise minimal set. Summer office to rooftop ready.',
+      fabric: 'Linen with lasercut detail', fit: 'Tailored jacket, relaxed shorts' },
+
+    { name: 'Black Linen Lasercut Shorts Set',     cat: 'sets',    colour: 'Black',            price: '£49',  sizes: ['10', '12', '14'],
+      img: 'BLACK LINEN WITH SQUARE LAZERCUT SUMMER SHORTS SUIT SET  size 10,12,14.jpg',
+      desc: 'Black linen with precise square lasercut panel detailing — a sharp, architectural set that works from business casual to evening with a change of footwear.',
+      fabric: 'Linen with lasercut detail', fit: 'Tailored jacket, relaxed shorts' },
+
+    { name: 'Blue Linen Asooke Patchwork Tunic',   cat: 'sets',    colour: 'Zara blue',        price: '£63',  sizes: ['S', 'M'],
+      img: 'Blue Linen stripe asooke patchwork tunic SM 2 pcs.jpeg',
+      desc: 'A two-piece linen tunic with stripe asooke patchwork panels — linen breathability meets the rich texture of hand-woven asooke in a considered pairing.',
+      fabric: 'Linen with hand-woven asooke patches', fit: 'Relaxed tunic, two-piece' },
+
+    { name: 'Blue Thin Stripe Asooke Tunic',       cat: 'sets',    colour: 'Blue',             price: '£63',  sizes: ['L', 'XL'],
+      img: 'Blue thin stripe asooke patchwork tunic L XL 3 pcs.jpeg',
+      desc: 'A three-piece tunic set in blue with fine stripe asooke patchwork detailing. Slim stripes create a subtle, refined pattern that wears well across occasions.',
+      fabric: 'Fashion fabric with hand-woven asooke patches', fit: 'Relaxed tunic, three-piece' },
+
+    { name: 'Navy Stripe Asooke Patchwork Tunic',  cat: 'sets',    colour: 'Navy',             price: '£63',  sizes: ['S', 'M'],
+      img: 'Navy blue stripe asooke patchwork tunic SM 3 pcs.jpeg',
+      desc: 'A three-piece navy stripe tunic with asooke patchwork panels — the deep navy ground makes the hand-woven asooke patches the focal point of the outfit.',
+      fabric: 'Fashion fabric with hand-woven asooke patches', fit: 'Relaxed tunic, three-piece' },
+
+    { name: 'Navy Thin Stripe Asooke Tunic',       cat: 'sets',    colour: 'Navy',             price: '£63',  sizes: ['S', 'M'],
+      img: 'Navy thin stripe asooke patchwork tunic SM 2 pcs.jpeg',
+      desc: 'A two-piece navy tunic in fine stripe fabric with asooke patchwork detail — understated pattern, heritage craft, and an effortless silhouette.',
+      fabric: 'Fashion fabric with hand-woven asooke patches', fit: 'Relaxed tunic, two-piece' },
+
+    // BOTTOMS
+    { name: 'Green Pleated Flare Pants',           cat: 'bottoms', colour: 'Green',            price: '£25',  sizes: ['8', '10', '12'],
+      img: 'GREEN PLEATED FLARE PANTS Size 8,10,12.jpeg',
+      desc: 'Pleated wide-leg flare trousers in fresh green — the pleats at the waist add structure while the flared hem creates a long, elegant line. A versatile wardrobe investment.',
+      fabric: 'Fashion fabric', fit: 'High-waisted, wide-leg flare' },
+  ];
+
+  const grid = document.getElementById('br-grid');
+  const countEl = document.getElementById('br-count');
+  const filterBtns = document.querySelectorAll('.br-filter-btn');
+
+  function encode(s) { return s.replace(/'/g, '%27'); }
+
+  function render(filter) {
+    const visible = filter === 'all' ? products : products.filter(p => p.cat === filter);
+    countEl.textContent = visible.length + ' piece' + (visible.length !== 1 ? 's' : '');
+    grid.innerHTML = visible.map(p => {
+      const realIdx = products.indexOf(p);
+      const main = BASE + encode(p.img);
+      const altLayer = p.alt ? `<div class="br-card-img-alt" style="background-image:url('${BASE + encode(p.alt)}')"></div>` : '';
+      return `
+        <div class="br-card" data-idx="${realIdx}" style="cursor:pointer">
+          <div class="br-card-img-wrap">
+            <div class="br-card-img" style="background-image:url('${main}')"></div>
+            ${altLayer}
+          </div>
+          <div class="br-card-body">
+            <div class="br-card-cat">${CAT_LABELS[p.cat]}</div>
+            <div class="br-card-name">${p.name}</div>
+            <div class="br-card-price" style="font-size:14px;font-weight:500;margin-top:4px">${p.price}</div>
+          </div>
+        </div>`;
+    }).join('');
+    grid.querySelectorAll('.br-card').forEach(card => {
+      card.addEventListener('click', () => openDrawer(parseInt(card.dataset.idx)));
+    });
+  }
+
+  const overlay  = document.getElementById('pd-overlay');
+  const drawer   = document.getElementById('pd-drawer');
+  const imgMain  = document.getElementById('pd-img-main');
+  const thumbsEl = document.getElementById('pd-thumbs');
+
+  function openDrawer(idx) {
+    const p = products[idx];
+    const images = [p.img, p.alt].filter(Boolean);
+    imgMain.style.backgroundImage = `url('${BASE + encode(images[0])}')`;
+    thumbsEl.innerHTML = images.map((img, i) => `
+      <div class="pd-thumb${i === 0 ? ' is-active' : ''}" data-img="${BASE + encode(img)}"
+           style="background-image:url('${BASE + encode(img)}')"></div>`).join('');
+    thumbsEl.querySelectorAll('.pd-thumb').forEach(t => {
+      t.addEventListener('click', () => {
+        thumbsEl.querySelectorAll('.pd-thumb').forEach(x => x.classList.remove('is-active'));
+        t.classList.add('is-active');
+        imgMain.style.backgroundImage = `url('${t.dataset.img}')`;
+      });
+    });
+    thumbsEl.style.display = images.length > 1 ? 'flex' : 'none';
+
+    document.getElementById('pd-cat-label').textContent = CAT_LABELS[p.cat];
+    document.getElementById('pd-name').textContent  = p.name;
+    document.getElementById('pd-colour').textContent = p.colour;
+    document.getElementById('pd-price').textContent  = p.price;
+    document.getElementById('pd-desc').textContent   = p.desc || '';
+
+    const fabricParts = [];
+    if (p.fabric) fabricParts.push(`<span><strong>Material</strong>${p.fabric}</span>`);
+    if (p.fit)    fabricParts.push(`<span><strong>Fit</strong>${p.fit}</span>`);
+    document.getElementById('pd-fabric-row').innerHTML = fabricParts.join('');
+
+    const sizesEl = document.getElementById('pd-sizes');
+    const sizesLabel = drawer.querySelector('.pd-sizes-label');
+    if (p.sizes.length) {
+      sizesLabel.style.display = '';
+      sizesEl.style.display = '';
+      sizesEl.innerHTML = p.sizes.map(s => `<button class="sz-btn" data-size="${s}">${s}</button>`).join('');
+      sizesEl.querySelectorAll('.sz-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          sizesEl.querySelectorAll('.sz-btn').forEach(b => b.classList.remove('is-selected'));
+          btn.classList.add('is-selected');
+        });
+      });
+      if (p.sizes.length === 1) sizesEl.querySelector('.sz-btn').classList.add('is-selected');
+    } else {
+      sizesLabel.style.display = 'none';
+      sizesEl.style.display = 'none';
+      sizesEl.innerHTML = '';
+    }
+
+    const addBtn = document.getElementById('pd-add-btn');
+    addBtn.textContent = 'Add to bag';
+    addBtn.disabled = false;
+    addBtn.onclick = () => {
+      const sel = sizesEl.querySelector('.sz-btn.is-selected');
+      if (p.sizes.length && !sel) {
+        sizesEl.querySelectorAll('.sz-btn').forEach(b => {
+          b.classList.add('needs-size');
+          b.addEventListener('animationend', () => b.classList.remove('needs-size'), { once: true });
+        });
+        return;
+      }
+      addToCart(p, sel ? sel.dataset.size : 'One size');
+      addBtn.textContent = 'Added ✓';
+      addBtn.classList.add('is-added');
+      setTimeout(() => { addBtn.textContent = 'Add to bag'; addBtn.classList.remove('is-added'); }, 1800);
+    };
+
+    overlay.classList.add('is-open');
+    drawer.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDrawer() {
+    overlay.classList.remove('is-open');
+    drawer.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('pd-close').addEventListener('click', closeDrawer);
+  overlay.addEventListener('click', closeDrawer);
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      render(btn.dataset.filter);
+    });
+  });
+
+  render('all');
+</script>
+
+</body>
+</html>
