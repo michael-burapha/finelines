@@ -337,6 +337,14 @@
 </footer>
 
 <script>
+  // Cart badge
+  (function() {
+    try {
+      const n = JSON.parse(localStorage.getItem('fl_cart') || '[]').reduce((s, i) => s + (i.qty || 1), 0);
+      document.querySelectorAll('.fl-cart-badge').forEach(el => el.textContent = n);
+    } catch(e) {}
+  })();
+
   // Sticky condensed header
   const header = document.getElementById('site-header');
   window.addEventListener('scroll', () => {
